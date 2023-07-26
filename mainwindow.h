@@ -51,6 +51,7 @@ private:
     Ui::MainWindow *ui;
 
     bool is_num_input = true;
+    bool is_var_input = false;
     bool is_dot_input = false;
     bool is_op_input = false;
     bool is_pow_input = false;

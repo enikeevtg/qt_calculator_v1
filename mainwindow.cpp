@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_op_minus, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_mult, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_div, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
+    connect(ui->pushButton_op_mod, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
 
     ui->pushButton_mfunc_inv->setCheckable(true);
     connect(ui->pushButton_mfunc_cos, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
@@ -32,10 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_mfunc_log, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
     connect(ui->pushButton_mfunc_ln, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
 
-    ui->doubleSpinBox->setEnabled(false);
-    ui->doubleSpinBox->setMaximum(std::numeric_limits<double>::max());
-    ui->doubleSpinBox->setMinimum(-std::numeric_limits<double>::max());
-    ui->doubleSpinBox->setDecimals(7);
+    ui->doubleSpinBox_var->setEnabled(false);
+    ui->doubleSpinBox_var->setMaximum(std::numeric_limits<double>::max());
+    ui->doubleSpinBox_var->setMinimum(-std::numeric_limits<double>::max());
+    ui->doubleSpinBox_var->setDecimals(7);
 }
 
 MainWindow::~MainWindow()
@@ -47,8 +48,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_AC_clicked() {
     ui->label_input->setText("0");
     ui->label_output->setText("");
+    ui->doubleSpinBox_var->setEnabled(false);
+    ui->doubleSpinBox_var->setValue(0.0);
 
     is_num_input = true;
+    is_var_input = false;
     is_dot_input = false;
     is_op_input = false;
     is_pow_input = false;
@@ -67,24 +71,22 @@ void MainWindow::on_pushButton_delete_prev_clicked() {
 
     QString input_label_text = ui->label_input->text();
     size_t input_text_length = input_label_text.length();
-
+    size_t reduced_size = input_text_length - 1;
     QString last_input_char = input_label_text.last(1);
-    int reducing_size = 1;
+
     if (last_input_char == " ") {
-        reducing_size = 3;
+        reduced_size -= 2;
     } else if (last_input_char == "(") {
-        int i = input_text_length - reducing_size;
-        while (reducing_size < (int)input_text_length &&
-               input_label_text[i] != ' ' && input_label_text[i] != '(' &&
-               input_label_text[i] != ')' && input_label_text[i] != '^') {
-            reducing_size++;
-            i--;
+        while (reduced_size >= 0 &&
+               input_label_text[reduced_size] != ' ' && input_label_text[reduced_size] != '(' &&
+               input_label_text[reduced_size] != ')' && input_label_text[reduced_size] != '^') {
+            reduced_size--;
         }
-        if (i >= 0 && input_label_text[i - 1] == '^') {
-            reducing_size++;
+        if (reduced_size > 0 && input_label_text[reduced_size - 1] == '^') {
+            reduced_size--;
         }
     }
-    input_label_text.resize(input_text_length - reducing_size);
+    input_label_text.resize(reduced_size);
     ui->label_input->setText(input_label_text);
     if (input_label_text == "") {
         ui->pushButton_0->click();
@@ -133,7 +135,7 @@ void MainWindow::lastTokenChecking() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DIGITS
+// DIGITS AND VARIABLE
 void MainWindow::clickedButtonDigits() {
     if (is_calc_done == true) {
         on_pushButton_AC_clicked();
@@ -144,7 +146,7 @@ void MainWindow::clickedButtonDigits() {
     if (ui->label_input->text() == "0" || ui->label_input->text() == "") {
         ui->label_input->setText(button->text());
     } else {
-        if (is_close_bracket_input == true) {
+        if (is_close_bracket_input == true || is_var_input == true) {
             ui->pushButton_op_mult->click();
         }
         ui->label_input->setText(ui->label_input->text() + button->text());
@@ -161,20 +163,37 @@ void MainWindow::on_pushButton_dot_clicked() {
         on_pushButton_AC_clicked();
     }
 
-    if (is_dot_input == false) {
+    if (is_dot_input == false && is_var_input == false) {
         if (is_num_input == false) {
             ui->pushButton_0->click();
         }
         ui->label_input->setText(ui->label_input->text() + '.');
         is_dot_input = true;
-        is_op_input = false;
-        is_open_bracket_input = false;
-        is_close_bracket_input = false;
     }
 }
 
 void MainWindow::on_pushButton_var_clicked() {
-    ui->doubleSpinBox->setEnabled(true);
+    if (is_calc_done == true) {
+        on_pushButton_AC_clicked();
+    }
+
+    if (ui->doubleSpinBox_var->isEnabled() == false) {
+        ui->doubleSpinBox_var->setEnabled(true);
+    }
+
+    if (ui->label_input->text() == "0") {
+        ui->label_input->setText("x");
+    } else {
+        if (is_num_input == true || is_var_input == true || is_close_bracket_input == true) {
+            ui->pushButton_op_mult->click();
+        }
+        ui->label_input->setText(ui->label_input->text() + "x");
+    }
+    is_var_input = true;
+    is_op_input = false;
+    is_u_minus_input = false;
+    is_open_bracket_input = false;
+    is_close_bracket_input = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,13 +213,15 @@ void MainWindow::clickedButtonOperations() {
         button_text = "/";
     else if (button_text == "−")
        button_text = "-";
+    else if (button_text == "mod")
+       button_text = "%";
 
     if (is_op_input == false) {
         if (last_input_char == ".") {
             ui->pushButton_0->click();
         }
 
-        if (ui->label_input->text() == "0" && button_text == "-") {
+        if ((ui->label_input->text() == "0" || is_open_bracket_input == true) && button_text == "-") {
             unaryMinusInput();
         } else if (is_open_bracket_input == false) {
             operatorInput(button_text);
@@ -208,6 +229,8 @@ void MainWindow::clickedButtonOperations() {
     } else {  // is_op_input == true
         if (ui->label_input->text() == "-" && button_text != "-") {
             unaryMinusChanging();
+        } else if (is_open_bracket_input == true && button_text != "-") {
+            on_pushButton_delete_prev_clicked();
         } else if (is_u_minus_input == false) {
             on_pushButton_delete_prev_clicked();
             button->click();
@@ -224,12 +247,14 @@ void MainWindow::unaryMinusInput() {
     is_num_input = false;
     is_op_input = true;
     is_u_minus_input = true;
+//    is_open_bracket_input = false;
 }
 
 void MainWindow::operatorInput(QString button_text) {
     ui->label_input->setText(ui->label_input->text() + " " + button_text + " ");
     is_num_input = false;
     is_dot_input = false;
+    is_var_input = false;
     is_op_input = true;
     is_open_bracket_input = false;
     is_close_bracket_input = false;
@@ -237,7 +262,9 @@ void MainWindow::operatorInput(QString button_text) {
 
 void MainWindow::unaryMinusChanging() {
     on_pushButton_delete_prev_clicked();
-    ui->pushButton_0->click();
+    if (ui->label_input->text().length() == 0) {
+        ui->pushButton_0->click();
+    }
     is_op_input = false;
     is_open_bracket_input = false;
     is_close_bracket_input = false;
@@ -267,7 +294,9 @@ void MainWindow::on_pushButton_open_bracket_clicked() {
     } else if (is_u_minus_input == true || is_mfunc_input == true || is_open_bracket_input == true || is_pow_input == true) {
         ui->label_input->setText(ui->label_input->text() + "(");
     } else {
-        ui->pushButton_op_mult->click();
+        if (is_num_input == true) {
+            ui->pushButton_op_mult->click();
+        }
         ui->label_input->setText(ui->label_input->text() + "(");
     }
 
@@ -353,6 +382,9 @@ void MainWindow::on_pushButton_calc_clicked() {
     strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
 
     double variable = 0;
+    if (ui->doubleSpinBox_var->isEnabled() == true) {
+        variable = ui->doubleSpinBox_var->value();
+    }
     double result = 0.0;
     node_t* q_root = NULL;
     int error = convert_infix_to_RPN(str_for_calc, &q_root);

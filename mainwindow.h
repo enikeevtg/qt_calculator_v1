@@ -30,6 +30,10 @@ private slots:
     void on_pushButton_dot_clicked();
 
     void clickedButtonOperations();
+    void unaryMinusInput();
+    void operatorInput(QString button_text);
+    void unaryMinusChanging();
+    void operatorChanging(QString button_text);
 
     void on_pushButton_close_bracket_clicked();
 
@@ -46,9 +50,10 @@ private:
     bool is_dot_input = false;
     bool is_op_input = false;
     bool is_u_minus_input = false;
-    bool is_close_bracket_input = true;
+    bool is_open_bracket_input = false;
+    bool is_close_bracket_input = false;
     int brackets_counter = 0;
-    bool is_math_func_input = false;
+    bool is_mfunc_input = false;
     bool is_calc_done = false;
 };
 #endif // MAINWINDOW_H

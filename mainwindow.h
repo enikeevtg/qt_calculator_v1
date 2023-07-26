@@ -24,9 +24,10 @@ public:
 
 private slots:
     void on_pushButton_AC_clicked();
+    void on_pushButton_delete_prev_clicked();
+    void lastTokenChecking();
 
     void clickedButtonDigits();
-
     void on_pushButton_dot_clicked();
 
     void clickedButtonOperations();
@@ -35,13 +36,10 @@ private slots:
     void unaryMinusChanging();
     void operatorChanging(QString button_text);
 
+    void on_pushButton_open_bracket_clicked();
     void on_pushButton_close_bracket_clicked();
 
     void on_pushButton_calc_clicked();
-
-    void on_pushButton_delete_prev_clicked();
-
-    void on_pushButton_open_bracket_clicked();
 
 private:
     Ui::MainWindow *ui;

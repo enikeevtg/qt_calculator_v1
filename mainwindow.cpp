@@ -71,54 +71,54 @@ void MainWindow::on_pushButton_delete_prev_clicked() {
             i--;
         }
     }
-
-
-
-    if (last_input_char == " ") {
-        reducing_size = 3;
-
-        if (input_label_text[input_text_length - reducing_size] != ')') {
-            is_num_input = false;
-        } else {
-            is_num_input = true;
-            is_dot_input = false;
-        }
-        is_op_input = false;
-    } else {
-        while (input_label_text[input_text_length - reducing_size] != ' ' &&
-               input_label_text[input_text_length - reducing_size] != '(' &&
-               input_label_text[input_text_length - reducing_size] != ')' &&
-               reducing_size < (int)input_text_length) {
-            reducing_size++;
-        }
-        is_num_input = false;
-        is_op_input = true;
+    input_label_text.resize(input_text_length - reducing_size);
+    ui->label_input->setText(input_label_text);
+    if (input_label_text == "") {
+        ui->pushButton_0->click();
     }
+    if(last_input_char == ")") {
+        brackets_counter++;
+    }
+    lastTokenChecking();
 
-//        int reducing_size = 1;
-
-//        if (last_input_char == ".") {
-//            is_num_input = true;
-//            is_dot_input = false;
-//        } else if (last_input_char == " ") {
-//            reducing_size = 3;
-//            is_num_input = true;
-//            is_op_input = false;
-//        } else if (last_input_char == "(") {
-//            reducing_size++;
-//            while (input_label_text[input_text_length - reducing_size] != ' ' &&
-//                   input_label_text[input_text_length - reducing_size] != '(' &&
-//                   input_label_text[input_text_length - reducing_size] != ')') {
-//                reducing_size++;
-//            }
-//        }
-
-        input_label_text.resize(input_text_length - reducing_size);
-        if (input_label_text == "") input_label_text = "0";
-        ui->label_input->setText(input_label_text);
 }
 
+void MainWindow::lastTokenChecking() {
+    is_num_input = false;
+    is_dot_input = false;
+    is_op_input = false;
+    is_u_minus_input = false;
+    is_open_bracket_input = false;
+    is_close_bracket_input = false;
+    is_mfunc_input = false;
+    is_calc_done = false;
 
+    QString last_label_char = ui->label_input->text().last(1);
+
+    if (last_label_char == " ") {
+        is_op_input = true;
+    } else if (last_label_char == "(") {
+        is_open_bracket_input = true;
+    } else if (last_label_char == ")") {
+        is_close_bracket_input = true;
+    } else if (last_label_char == "-") {
+        is_op_input = true;
+        is_u_minus_input = true;
+    } else {
+        QString input_label_text = ui->label_input->text();
+        size_t input_text_length = input_label_text.length();
+        int i = input_text_length - 1;
+        while (input_label_text[i] != ' ' && input_label_text[i] != '(' && input_label_text[i] != '-') {
+            if (input_label_text[i] == '.') {
+                is_dot_input = true;
+            }
+            i--;
+        }
+        is_num_input = true;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DIGITS
 void MainWindow::clickedButtonDigits() {
     if (is_calc_done == true) {
@@ -159,7 +159,7 @@ void MainWindow::on_pushButton_dot_clicked() {
     }
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OPERATORS
 void MainWindow::clickedButtonOperations() {
     if (is_calc_done == true) {
@@ -231,7 +231,7 @@ void MainWindow::operatorChanging(QString button_text) {
     is_op_input = true;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BRACKETS
 void MainWindow::on_pushButton_open_bracket_clicked() {
     if (is_calc_done == true) {
@@ -274,7 +274,8 @@ void MainWindow::on_pushButton_close_bracket_clicked() {
     }
 }
 
-// CALCULATION LAUNCH
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CALCULATIONS LAUNCH
 void MainWindow::on_pushButton_calc_clicked() {
     if (is_calc_done == true) {
         on_pushButton_AC_clicked();

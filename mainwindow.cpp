@@ -24,6 +24,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_op_mult, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_div, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
 
+    ui->pushButton_mfunc_inv->setCheckable(true);
+    connect(ui->pushButton_mfunc_cos, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
+    connect(ui->pushButton_mfunc_sin, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
+    connect(ui->pushButton_mfunc_tan, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
+    connect(ui->pushButton_mfunc_sqrt, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
+    connect(ui->pushButton_mfunc_log, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
+    connect(ui->pushButton_mfunc_ln, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
+
     ui->doubleSpinBox->setEnabled(false);
     ui->doubleSpinBox->setMaximum(std::numeric_limits<double>::max());
     ui->doubleSpinBox->setMinimum(-std::numeric_limits<double>::max());
@@ -43,6 +51,7 @@ void MainWindow::on_pushButton_AC_clicked() {
     is_num_input = true;
     is_dot_input = false;
     is_op_input = false;
+    is_pow_input = false;
     is_u_minus_input = false;
     is_open_bracket_input = false;
     is_close_bracket_input = false;
@@ -65,28 +74,33 @@ void MainWindow::on_pushButton_delete_prev_clicked() {
         reducing_size = 3;
     } else if (last_input_char == "(") {
         int i = input_text_length - reducing_size;
-        while (input_label_text[i] != ' ' && input_label_text[i] != '(' &&
-               input_label_text[i] != ')' && reducing_size < (int)input_text_length) {
+        while (reducing_size < (int)input_text_length &&
+               input_label_text[i] != ' ' && input_label_text[i] != '(' &&
+               input_label_text[i] != ')' && input_label_text[i] != '^') {
             reducing_size++;
             i--;
+        }
+        if (i >= 0 && input_label_text[i - 1] == '^') {
+            reducing_size++;
         }
     }
     input_label_text.resize(input_text_length - reducing_size);
     ui->label_input->setText(input_label_text);
     if (input_label_text == "") {
         ui->pushButton_0->click();
+    } else {
+        if(last_input_char == ")") {
+            brackets_counter++;
+        }
+        lastTokenChecking();
     }
-    if(last_input_char == ")") {
-        brackets_counter++;
-    }
-    lastTokenChecking();
-
 }
 
 void MainWindow::lastTokenChecking() {
     is_num_input = false;
     is_dot_input = false;
     is_op_input = false;
+    is_pow_input = false;
     is_u_minus_input = false;
     is_open_bracket_input = false;
     is_close_bracket_input = false;
@@ -108,7 +122,7 @@ void MainWindow::lastTokenChecking() {
         QString input_label_text = ui->label_input->text();
         size_t input_text_length = input_label_text.length();
         int i = input_text_length - 1;
-        while (input_label_text[i] != ' ' && input_label_text[i] != '(' && input_label_text[i] != '-') {
+        while (i >= 0 && input_label_text[i] != ' ' && input_label_text[i] != '(' && input_label_text[i] != '-') {
             if (input_label_text[i] == '.') {
                 is_dot_input = true;
             }
@@ -159,6 +173,10 @@ void MainWindow::on_pushButton_dot_clicked() {
     }
 }
 
+void MainWindow::on_pushButton_var_clicked() {
+    ui->doubleSpinBox->setEnabled(true);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OPERATORS
 void MainWindow::clickedButtonOperations() {
@@ -168,7 +186,6 @@ void MainWindow::clickedButtonOperations() {
 
     QPushButton* button = (QPushButton*)sender();
     QString button_text = button->text();
-//    size_t input_text_length = ui->label_input->text().length();
     QString last_input_char = ui->label_input->text().last(1);
 
     if (button_text == "×")
@@ -192,7 +209,8 @@ void MainWindow::clickedButtonOperations() {
         if (ui->label_input->text() == "-" && button_text != "-") {
             unaryMinusChanging();
         } else if (is_u_minus_input == false) {
-            operatorChanging(button_text);
+            on_pushButton_delete_prev_clicked();
+            button->click();
         }
     }
 }
@@ -225,10 +243,16 @@ void MainWindow::unaryMinusChanging() {
     is_close_bracket_input = false;
 }
 
-void MainWindow::operatorChanging(QString button_text) {
-    on_pushButton_delete_prev_clicked();
-    ui->label_input->setText(ui->label_input->text() + " " + button_text + " ");
-    is_op_input = true;
+void MainWindow::on_pushButton_op_pow_clicked() {
+    if (is_calc_done == true) {
+        on_pushButton_AC_clicked();
+    }
+
+    if (is_num_input == true || is_close_bracket_input == true || ui->label_input->text() == "0") {
+        ui->label_input->setText(ui->label_input->text() + "^");
+        is_pow_input = true;
+        on_pushButton_open_bracket_clicked();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,16 +264,17 @@ void MainWindow::on_pushButton_open_bracket_clicked() {
 
     if (ui->label_input->text() == "0") {
         ui->label_input->setText("(");
-    } else if (is_u_minus_input == true || is_mfunc_input == true || is_open_bracket_input == true) {
+    } else if (is_u_minus_input == true || is_mfunc_input == true || is_open_bracket_input == true || is_pow_input == true) {
         ui->label_input->setText(ui->label_input->text() + "(");
-        is_u_minus_input = false;
-        is_mfunc_input = false;
     } else {
         ui->pushButton_op_mult->click();
         ui->label_input->setText(ui->label_input->text() + "(");
     }
 
+    is_num_input = false;
+    is_dot_input = false;
     is_op_input = false;
+    is_pow_input = false;
     is_u_minus_input = false;
     is_open_bracket_input = true;
     is_close_bracket_input = false;
@@ -272,6 +297,47 @@ void MainWindow::on_pushButton_close_bracket_clicked() {
         is_close_bracket_input = true;
         brackets_counter--;
     }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MATH FUNCTIONS
+void MainWindow::on_pushButton_mfunc_inv_clicked() {
+    if (is_calc_done == true) {
+        on_pushButton_AC_clicked();
+    }
+
+    if (ui->pushButton_mfunc_inv->isChecked()) {
+        ui->pushButton_mfunc_cos->setText("acos");
+        ui->pushButton_mfunc_sin->setText("asin");
+        ui->pushButton_mfunc_tan->setText("atan");
+    } else {
+        ui->pushButton_mfunc_cos->setText("cos");
+        ui->pushButton_mfunc_sin->setText("sin");
+        ui->pushButton_mfunc_tan->setText("tan");
+    }
+}
+
+void MainWindow::clickedButtonMathFunctions() {
+    if (is_calc_done == true) {
+        on_pushButton_AC_clicked();
+    }
+
+    QPushButton* button = (QPushButton*)sender();
+    QString button_text = button->text();
+
+    if (button_text == "√")
+        button_text = "sqrt";  //!!!!!
+
+    if (ui->label_input->text() == "0") {
+        ui->label_input->setText(button_text);
+    } else {
+        if (is_num_input == true) {
+            ui->pushButton_op_mult->click();
+        }
+        ui->label_input->setText(ui->label_input->text() + button_text);
+    }
+    is_mfunc_input = true;
+    on_pushButton_open_bracket_clicked();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,4 +372,3 @@ void MainWindow::on_pushButton_calc_clicked() {
     is_calc_done = true;
     delete str_for_calc;
 }
-

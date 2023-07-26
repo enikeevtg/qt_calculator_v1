@@ -34,12 +34,18 @@ private slots:
     void unaryMinusInput();
     void operatorInput(QString button_text);
     void unaryMinusChanging();
-    void operatorChanging(QString button_text);
 
     void on_pushButton_open_bracket_clicked();
     void on_pushButton_close_bracket_clicked();
 
     void on_pushButton_calc_clicked();
+
+    void on_pushButton_mfunc_inv_clicked();
+    void clickedButtonMathFunctions();
+
+    void on_pushButton_var_clicked();
+
+    void on_pushButton_op_pow_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -47,6 +53,7 @@ private:
     bool is_num_input = true;
     bool is_dot_input = false;
     bool is_op_input = false;
+    bool is_pow_input = false;
     bool is_u_minus_input = false;
     bool is_open_bracket_input = false;
     bool is_close_bracket_input = false;

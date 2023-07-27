@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>550</height>
+    <width>1040</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="font">
@@ -32,8 +32,8 @@
    <widget class="QPushButton" name="pushButton_AC">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>250</y>
+      <x>620</x>
+      <y>320</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -68,8 +68,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_7">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>310</y>
+      <x>760</x>
+      <y>380</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -104,8 +104,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>370</y>
+      <x>760</x>
+      <y>440</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -140,8 +140,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_1">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>430</y>
+      <x>760</x>
+      <y>500</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -176,8 +176,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_0">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>490</y>
+      <x>760</x>
+      <y>560</y>
       <width>140</width>
       <height>60</height>
      </rect>
@@ -212,8 +212,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_8">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>310</y>
+      <x>830</x>
+      <y>380</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -248,8 +248,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>370</y>
+      <x>830</x>
+      <y>440</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -284,8 +284,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>430</y>
+      <x>830</x>
+      <y>500</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -320,8 +320,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_9">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>310</y>
+      <x>900</x>
+      <y>380</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -356,8 +356,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_6">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>370</y>
+      <x>900</x>
+      <y>440</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -392,8 +392,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>430</y>
+      <x>900</x>
+      <y>500</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -428,8 +428,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_op_div">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>250</y>
+      <x>970</x>
+      <y>320</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -464,8 +464,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_op_mult">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>310</y>
+      <x>970</x>
+      <y>380</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -500,8 +500,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_op_minus">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>370</y>
+      <x>970</x>
+      <y>440</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -536,8 +536,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_op_plus">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>430</y>
+      <x>970</x>
+      <y>500</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -572,8 +572,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_dot">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>490</y>
+      <x>900</x>
+      <y>560</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -614,8 +614,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_calc">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>490</y>
+      <x>970</x>
+      <y>560</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -663,8 +663,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_open_bracket">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>250</y>
+      <x>760</x>
+      <y>320</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -699,8 +699,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_close_bracket">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>250</y>
+      <x>830</x>
+      <y>320</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -735,10 +735,10 @@ QPushButton:pressed {
    <widget class="QLabel" name="label_output">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>100</y>
-      <width>821</width>
-      <height>84</height>
+      <x>620</x>
+      <y>160</y>
+      <width>420</width>
+      <height>100</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -755,7 +755,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QLabel {
-	border: disabled;
+	border: disable;
 }</string>
     </property>
     <property name="frameShape">
@@ -777,16 +777,16 @@ QPushButton:pressed {
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
     <property name="margin">
-     <number>0</number>
+     <number>11</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_input">
     <property name="geometry">
      <rect>
-      <x>-1</x>
-      <y>20</y>
-      <width>840</width>
-      <height>60</height>
+      <x>620</x>
+      <y>0</y>
+      <width>420</width>
+      <height>160</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -813,7 +813,7 @@ QPushButton:pressed {
      <string>0</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
@@ -831,10 +831,10 @@ QPushButton:pressed {
     </property>
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>189</y>
-      <width>210</width>
-      <height>61</height>
+      <x>690</x>
+      <y>260</y>
+      <width>350</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="font">
@@ -859,8 +859,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_delete_prev">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>250</y>
+      <x>900</x>
+      <y>320</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -895,8 +895,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_sqrt">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>370</y>
+      <x>690</x>
+      <y>440</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -931,8 +931,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_cos">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>370</y>
+      <x>620</x>
+      <y>440</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -967,8 +967,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_sin">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>430</y>
+      <x>620</x>
+      <y>500</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1003,8 +1003,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_tan">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>490</y>
+      <x>620</x>
+      <y>560</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1039,8 +1039,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_ln">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>430</y>
+      <x>690</x>
+      <y>500</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1075,8 +1075,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_log">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>490</y>
+      <x>690</x>
+      <y>560</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1111,8 +1111,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_op_pow">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>310</y>
+      <x>690</x>
+      <y>380</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1147,8 +1147,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_var">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>190</y>
+      <x>620</x>
+      <y>260</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1183,8 +1183,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_mfunc_inv">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>310</y>
+      <x>620</x>
+      <y>380</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1219,8 +1219,8 @@ QPushButton:checked {
    <widget class="QPushButton" name="pushButton_op_mod">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>250</y>
+      <x>690</x>
+      <y>320</y>
       <width>70</width>
       <height>60</height>
      </rect>
@@ -1252,8 +1252,114 @@ QPushButton:pressed {
      <string>mod</string>
     </property>
    </widget>
+   <widget class="QCustomPlot" name="expression_graph" native="true">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>0</y>
+      <width>560</width>
+      <height>540</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	border: 1px solid black;	
+	background-color: grey;
+}</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_print_graph">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>560</y>
+      <width>140</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>29</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: 1px solid rgb(31, 38, 50);
+	background-color: rgb(41, 50, 66);
+	color: white;
+}
+
+QPushButton:pressed {
+	background-color: rgb(32, 39, 53);
+}</string>
+    </property>
+    <property name="text">
+     <string>plot</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_xmin">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>540</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_xmax">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>540</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_ymin">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>520</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_ymax">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

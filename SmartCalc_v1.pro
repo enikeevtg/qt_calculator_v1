@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
 
@@ -25,11 +25,13 @@ SOURCES += \
     02_evaluations/08_evaluate_expression.c \
     02_evaluations/09_numerical_calculation.c \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     data_structures.h \
     mainwindow.h \
+    qcustomplot.h \
     smart_calc.h
 
 FORMS += \

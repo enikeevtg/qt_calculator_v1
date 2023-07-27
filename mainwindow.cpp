@@ -7,7 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    // INPUT_LABEL
+    ui->label_input->setWordWrap(true);
 
+    // DIGIT BUTTONS
     connect(ui->pushButton_0, SIGNAL(clicked()), this, SLOT(clickedButtonDigits()));
     connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(clickedButtonDigits()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(clickedButtonDigits()));
@@ -19,12 +22,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_8, SIGNAL(clicked()), this, SLOT(clickedButtonDigits()));
     connect(ui->pushButton_9, SIGNAL(clicked()), this, SLOT(clickedButtonDigits()));
 
+    // OPERATORS BUTTONS
     connect(ui->pushButton_op_plus, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_minus, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_mult, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_div, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
     connect(ui->pushButton_op_mod, SIGNAL(clicked()), this, SLOT(clickedButtonOperations()));
 
+    // MATH FUNCTIONS BUTTONS
     ui->pushButton_mfunc_inv->setCheckable(true);
     connect(ui->pushButton_mfunc_cos, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
     connect(ui->pushButton_mfunc_sin, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
@@ -33,10 +38,30 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_mfunc_log, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
     connect(ui->pushButton_mfunc_ln, SIGNAL(clicked()), this, SLOT(clickedButtonMathFunctions()));
 
+    // VARIABLE SPINBOX
     ui->doubleSpinBox_var->setEnabled(false);
     ui->doubleSpinBox_var->setMaximum(std::numeric_limits<double>::max());
     ui->doubleSpinBox_var->setMinimum(-std::numeric_limits<double>::max());
     ui->doubleSpinBox_var->setDecimals(7);
+
+    // GRAPH RANGE SPINBOXES
+    ui->doubleSpinBox_xmin->setMinimum(-1000000.0);
+    ui->doubleSpinBox_xmin->setMaximum(1000000.0);
+
+    ui->doubleSpinBox_xmax->setMinimum(-1000000.0);
+    ui->doubleSpinBox_xmin->setMaximum(1000000.0);
+
+    ui->doubleSpinBox_ymin->setMinimum(-1000000.0);
+    ui->doubleSpinBox_ymin->setMaximum(1000000.0);
+
+    ui->doubleSpinBox_ymax->setMinimum(-1000000.0);
+    ui->doubleSpinBox_ymin->setMaximum(1000000.0);
+
+    ui->doubleSpinBox_var->setValue(0.0);
+    ui->doubleSpinBox_xmin->setValue(-1.0);
+    ui->doubleSpinBox_xmax->setValue(1.0);
+    ui->doubleSpinBox_ymin->setValue(-1.0);
+    ui->doubleSpinBox_ymax->setValue(1.0);
 }
 
 MainWindow::~MainWindow()
@@ -50,6 +75,10 @@ void MainWindow::on_pushButton_AC_clicked() {
     ui->label_output->setText("");
     ui->doubleSpinBox_var->setEnabled(false);
     ui->doubleSpinBox_var->setValue(0.0);
+    ui->doubleSpinBox_xmin->setValue(-1.0);
+    ui->doubleSpinBox_xmax->setValue(1.0);
+    ui->doubleSpinBox_ymin->setValue(-1.0);
+    ui->doubleSpinBox_ymax->setValue(1.0);
 
     is_num_input = true;
     is_var_input = false;
@@ -62,6 +91,7 @@ void MainWindow::on_pushButton_AC_clicked() {
     brackets_counter = 0;
     is_mfunc_input = false;
     is_calc_done = false;
+    is_graph_plotted = false;
 }
 
 void MainWindow::on_pushButton_delete_prev_clicked() {
@@ -360,7 +390,7 @@ void MainWindow::clickedButtonMathFunctions() {
     if (ui->label_input->text() == "0") {
         ui->label_input->setText(button_text);
     } else {
-        if (is_num_input == true) {
+        if (is_num_input == true || is_close_bracket_input == true) {
             ui->pushButton_op_mult->click();
         }
         ui->label_input->setText(ui->label_input->text() + button_text);
@@ -381,12 +411,13 @@ void MainWindow::on_pushButton_calc_clicked() {
     QByteArray tmp_byte_array = input_label_text.toLatin1();
     strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
 
-    double variable = 0;
+    double variable = 0.0;
     if (ui->doubleSpinBox_var->isEnabled() == true) {
         variable = ui->doubleSpinBox_var->value();
     }
     double result = 0.0;
     node_t* q_root = NULL;
+
     int error = convert_infix_to_RPN(str_for_calc, &q_root);
     if (error == OK) {
         error = evaluate_expression(q_root, variable, &result);
@@ -394,6 +425,7 @@ void MainWindow::on_pushButton_calc_clicked() {
 
     QString result_string;
     if (error == OK) {
+        ui->label_input->setText(input_label_text + " =");
         result_string = QString::number(result);
     } else {
         ERRORS_MESSAGES;
@@ -404,3 +436,37 @@ void MainWindow::on_pushButton_calc_clicked() {
     is_calc_done = true;
     delete str_for_calc;
 }
+
+// GRAPH
+void MainWindow::on_pushButton_print_graph_clicked() {
+    if (is_graph_plotted == false) {
+        double x_min = ui->doubleSpinBox_xmin->value();
+        double x_max = ui->doubleSpinBox_xmax->value();
+        double y_min = ui->doubleSpinBox_ymin->value();
+        double y_max = ui->doubleSpinBox_ymax->value();
+
+        graphPlot(x_min, x_max, y_min, y_max);
+        is_graph_plotted = true;
+    }
+}
+
+void MainWindow::graphPlot(double x_min, double x_max, double y_min, double y_max) {
+    if (x_max - x_min > 0 && y_max - y_min > 0) {
+        QVector<double> x(101), y(101);
+        for (int i = 0; i < 101; i++) {
+            x[i] = i/50.0 - 1;
+            y[i] = x[i] * x[i];
+        }
+
+        ui->expression_graph->expression_graph();
+        ui->expression_graph->graph(0)->setData(x, y);
+
+        ui->expression_graph->xAxis->setLabel("x");
+        ui->expression_graph->yAxis->setLabel("y(x)");
+
+        ui->expression_graph->xAxis->setRange(x_min, x_max);
+        ui->expression_graph->yAxis->setRange(y_min, y_max);
+        ui->expression_graph->replot();
+    }
+}
+

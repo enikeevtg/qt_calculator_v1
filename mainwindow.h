@@ -47,6 +47,9 @@ private slots:
 
     void on_pushButton_op_pow_clicked();
 
+    void on_pushButton_print_graph_clicked();
+    void graphPlot(double x_min, double x_max, double y_min, double y_max);
+
 private:
     Ui::MainWindow *ui;
 
@@ -61,5 +64,6 @@ private:
     int brackets_counter = 0;
     bool is_mfunc_input = false;
     bool is_calc_done = false;
+    bool is_graph_plotted = false;
 };
 #endif // MAINWINDOW_H

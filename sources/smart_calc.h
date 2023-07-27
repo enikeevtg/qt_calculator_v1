@@ -50,10 +50,10 @@ enum error_codes {
       "empty brackets",                                                 \
       "incorrect input",                                                \
       "empty queue",                                                    \
-      "invalid argument: acos",                                            \
-      "invalid argument: asin",                                            \
-      "invalid argument: ln",                                              \
-      "invalid argument: log",                                             \
+      "invalid argument: acos",                                         \
+      "invalid argument: asin",                                         \
+      "invalid argument: ln",                                           \
+      "invalid argument: log",                                          \
       "invalid argument: sqrt"}
 
 #define MATH_FUNCTIONS_NUMBER 9

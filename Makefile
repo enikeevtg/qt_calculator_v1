@@ -6,7 +6,7 @@ MK = mkdir -p
 RM = rm -rf
 OS := $(shell uname)
 ifeq ($(OS), Darwin)
-#	LEAKS = CK_FORK=no leaks --atExit --
+	LEAKS = CK_FORK=no leaks --atExit --
 	REPORT_OPEN = open
 else ifeq ($(OS), Linux)
 	LEAKS =
@@ -93,5 +93,6 @@ clean:
 	@$(RM) $(OBJ_DIR)
 	@$(RM) *.gcno *.gcda
 	@$(RM) *.dSYM
+	@$(RM) ./sources/*.o
 	@$(RM) ./report/
 	@$(RM) $(TEST_EXE)

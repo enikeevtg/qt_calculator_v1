@@ -69,8 +69,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->expression_graph->xAxis->setLabel("x");
     ui->expression_graph->yAxis->setLabel("y(x)");
 
-    ui->expression_graph->xAxis->setRange(0, 1);
-    ui->expression_graph->yAxis->setRange(0, 1);
+    ui->expression_graph->xAxis->setRange(0, 21);
+    ui->expression_graph->yAxis->setRange(0, 21);
 }
 
 MainWindow::~MainWindow()
@@ -88,8 +88,9 @@ void MainWindow::on_pushButton_AC_clicked() {
     ui->doubleSpinBox_xmax->setValue(21.0);
     ui->doubleSpinBox_ymin->setValue(0);
     ui->doubleSpinBox_ymax->setValue(21.0);
-    ui->expression_graph->xAxis->setRange(0, 1);
-    ui->expression_graph->yAxis->setRange(0, 1);
+    ui->expression_graph->xAxis->setRange(0, 21);
+    ui->expression_graph->yAxis->setRange(0, 21);
+    ui->expression_graph->removeGraph(0);
 
     is_num_input = true;
     is_var_input = false;
@@ -339,7 +340,7 @@ void MainWindow::on_pushButton_open_bracket_clicked() {
     } else if (is_u_minus_input == true || is_mfunc_input == true || is_open_bracket_input == true || is_pow_input == true) {
         ui->label_input->setText(ui->label_input->text() + "(");
     } else {
-        if (is_num_input == true) {
+        if (is_num_input == true || is_var_input == true) {
             ui->pushButton_op_mult->click();
         }
         ui->label_input->setText(ui->label_input->text() + "(");
@@ -416,7 +417,11 @@ void MainWindow::clickedButtonMathFunctions() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CALCULATIONS LAUNCH
-int MainWindow::on_pushButton_calc_clicked() {
+void MainWindow::on_pushButton_calc_clicked() {
+    if (is_calc_done == true) {
+        on_pushButton_AC_clicked();
+    }
+
     int error = OK;
     QString input_label_text = ui->label_input->text();
     char* str_for_calc = new char(input_label_text.length());
@@ -444,7 +449,6 @@ int MainWindow::on_pushButton_calc_clicked() {
     ui->label_output->setText(result_string);
     is_calc_done = true;
     delete str_for_calc;
-    return error;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -517,10 +521,10 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min, double y_ma
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRAPH
 //double stepSizeCalculation(QVector<double> x, QVector<double> y, double scale) {
-//    QVector<double> delta_x = x.last(2);
-//    QVector<double> delta_y = y.last(2);
-//    double delta = sqrt(pow((delta_x.last() - delta_x.first()), 2) + pow((delta_y.last() - delta_y.first()), 2));
-//    if (delta > scale)
+//   QVector<double> delta_x = x.last(2);
+//   QVector<double> delta_y = y.last(2);
+//   double delta = sqrt(pow((delta_x.last() - delta_x.first()), 2) + pow((delta_y.last() - delta_y.first()), 2));
+//   if (delta > scale)
 
 //}
 

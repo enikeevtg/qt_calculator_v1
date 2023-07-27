@@ -43,7 +43,7 @@ private slots:
     void on_pushButton_mfunc_inv_clicked();
     void clickedButtonMathFunctions();
 
-    int on_pushButton_calc_clicked();
+    void on_pushButton_calc_clicked();
     void on_pushButton_print_graph_clicked();
     void graphPlot(double x_min, double x_max, double y_min, double y_max);
 

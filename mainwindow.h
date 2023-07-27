@@ -29,24 +29,21 @@ private slots:
 
     void clickedButtonDigits();
     void on_pushButton_dot_clicked();
+    void on_pushButton_var_clicked();
 
     void clickedButtonOperations();
     void unaryMinusInput();
     void operatorInput(QString button_text);
     void unaryMinusChanging();
+    void on_pushButton_op_pow_clicked();
 
     void on_pushButton_open_bracket_clicked();
     void on_pushButton_close_bracket_clicked();
 
-    void on_pushButton_calc_clicked();
-
     void on_pushButton_mfunc_inv_clicked();
     void clickedButtonMathFunctions();
 
-    void on_pushButton_var_clicked();
-
-    void on_pushButton_op_pow_clicked();
-
+    int on_pushButton_calc_clicked();
     void on_pushButton_print_graph_clicked();
     void graphPlot(double x_min, double x_max, double y_min, double y_max);
 
@@ -64,6 +61,5 @@ private:
     int brackets_counter = 0;
     bool is_mfunc_input = false;
     bool is_calc_done = false;
-    bool is_graph_plotted = false;
 };
 #endif // MAINWINDOW_H

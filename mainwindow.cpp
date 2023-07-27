@@ -91,7 +91,6 @@ void MainWindow::on_pushButton_AC_clicked() {
     brackets_counter = 0;
     is_mfunc_input = false;
     is_calc_done = false;
-    is_graph_plotted = false;
 }
 
 void MainWindow::on_pushButton_delete_prev_clicked() {
@@ -401,11 +400,8 @@ void MainWindow::clickedButtonMathFunctions() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CALCULATIONS LAUNCH
-void MainWindow::on_pushButton_calc_clicked() {
-    if (is_calc_done == true) {
-        on_pushButton_AC_clicked();
-    }
-
+int MainWindow::on_pushButton_calc_clicked() {
+    int error = OK;
     QString input_label_text = ui->label_input->text();
     char* str_for_calc = new char(input_label_text.length());
     QByteArray tmp_byte_array = input_label_text.toLatin1();
@@ -418,7 +414,7 @@ void MainWindow::on_pushButton_calc_clicked() {
     double result = 0.0;
     node_t* q_root = NULL;
 
-    int error = convert_infix_to_RPN(str_for_calc, &q_root);
+    error = convert_infix_to_RPN(str_for_calc, &q_root);
     if (error == OK) {
         error = evaluate_expression(q_root, variable, &result);
     }
@@ -435,23 +431,55 @@ void MainWindow::on_pushButton_calc_clicked() {
     ui->label_output->setText(result_string);
     is_calc_done = true;
     delete str_for_calc;
+    return error;
 }
 
 // GRAPH
 void MainWindow::on_pushButton_print_graph_clicked() {
-    if (is_graph_plotted == false) {
+    int error = on_pushButton_calc_clicked();
+    if (error == OK) {
         double x_min = ui->doubleSpinBox_xmin->value();
         double x_max = ui->doubleSpinBox_xmax->value();
         double y_min = ui->doubleSpinBox_ymin->value();
         double y_max = ui->doubleSpinBox_ymax->value();
 
         graphPlot(x_min, x_max, y_min, y_max);
-        is_graph_plotted = true;
     }
 }
 
 void MainWindow::graphPlot(double x_min, double x_max, double y_min, double y_max) {
     if (x_max - x_min > 0 && y_max - y_min > 0) {
+        // case if variable box disable (not var in expression)
+
+
+        QString input_label_text = ui->label_input->text();
+        char* str_for_calc = new char(input_label_text.length());
+        QByteArray tmp_byte_array = input_label_text.toLatin1();
+        strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
+
+        double variable = -1000000.0;
+        double result = 0.0;
+        node_t* q_root = NULL;
+
+        int error = convert_infix_to_RPN(str_for_calc, &q_root);
+        if (error == OK) {
+            error = evaluate_expression(q_root, variable, &result);
+        }
+
+        QString result_string;
+        if (OK < error && error < ACOS_ERROR) {
+            ERRORS_MESSAGES;
+            ui->label_output->setText(errors_msg[error]);
+        } else {
+
+        }
+
+        ui->label_output->setText(result_string);
+        is_calc_done = true;
+        delete str_for_calc;
+
+
+
         QVector<double> x(101), y(101);
         for (int i = 0; i < 101; i++) {
             x[i] = i/50.0 - 1;

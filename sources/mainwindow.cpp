@@ -78,18 +78,15 @@ MainWindow::MainWindow(QWidget* parent)
   ui->doubleSpinBox_ymax->setMinimum(-1000000.0);
   ui->doubleSpinBox_ymax->setMaximum(1000000.0);
 
-  ui->doubleSpinBox_xmin->setValue(0);
+  ui->doubleSpinBox_xmin->setValue(0.0);
   ui->doubleSpinBox_xmax->setValue(21.0);
-  ui->doubleSpinBox_ymin->setValue(0);
-  ui->doubleSpinBox_ymax->setValue(21.0);
+  ui->doubleSpinBox_ymin->setValue(-11.0);
+  ui->doubleSpinBox_ymax->setValue(11.0);
 
   // GRAPH
-  ui->expression_graph->setBackground(QColorConstants::Svg::grey);
-  ui->expression_graph->xAxis->setLabel("x");
-  ui->expression_graph->yAxis->setLabel("y(x)");
-
-  ui->expression_graph->xAxis->setRange(0, 21);
-  ui->expression_graph->yAxis->setRange(0, 21);
+  ui->expression_graph->setBackground(QColor(58, 70, 90));
+  ui->expression_graph->xAxis->setRange(0.0, 21.0);
+  ui->expression_graph->yAxis->setRange(-11.0, 11.0);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -102,8 +99,8 @@ void MainWindow::on_pushButton_AC_clicked() {
   ui->doubleSpinBox_var->setValue(0.0);
   ui->doubleSpinBox_xmin->setValue(0);
   ui->doubleSpinBox_xmax->setValue(21.0);
-  ui->doubleSpinBox_ymin->setValue(0);
-  ui->doubleSpinBox_ymax->setValue(21.0);
+  ui->doubleSpinBox_ymin->setValue(-11.0);
+  ui->doubleSpinBox_ymax->setValue(11.0);
   ui->expression_graph->xAxis->setRange(0, 21);
   ui->expression_graph->yAxis->setRange(0, 21);
   ui->expression_graph->removeGraph(0);
@@ -362,13 +359,14 @@ void MainWindow::on_pushButton_open_bracket_clicked() {
              is_open_bracket_input == true || is_pow_input == true) {
     ui->label_input->setText(ui->label_input->text() + "(");
   } else {
-    if (is_num_input == true || is_var_input == true) {
+    if (is_num_input == true || is_var_input == true || is_close_bracket_input == true) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + "(");
   }
 
   is_num_input = false;
+  is_var_input = false;
   is_dot_input = false;
   is_op_input = false;
   is_pow_input = false;
@@ -444,16 +442,16 @@ void MainWindow::on_pushButton_calc_clicked() {
     on_pushButton_AC_clicked();
   }
 
-  int error = OK;
   QString input_label_text = ui->label_input->text();
-  char* str_for_calc = new char(input_label_text.length());
   QByteArray tmp_byte_array = input_label_text.toLatin1();
+  tmp_byte_array.replace(" ", "");
+  char* str_for_calc = new char(input_label_text.length());
   strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
 
+  int error = OK;
   double variable = ui->doubleSpinBox_var->value();
   double result = 0.0;
   node_t* q_root = NULL;
-
   error = convert_infix_to_RPN(str_for_calc, &q_root);
   if (error == OK) {
     error = evaluate_expression(q_root, variable, &result);
@@ -461,13 +459,13 @@ void MainWindow::on_pushButton_calc_clicked() {
 
   QString result_string;
   if (error == OK) {
-    ui->label_input->setText(input_label_text + " =");
     result_string = QString::number(result);
   } else {
     ERRORS_MESSAGES;
     result_string = errors_msg[error];
   }
 
+  ui->label_input->setText(input_label_text + " =");
   ui->label_output->setText(result_string);
   is_calc_done = true;
   delete str_for_calc;
@@ -491,22 +489,17 @@ void MainWindow::on_pushButton_print_graph_clicked() {
 void MainWindow::graphPlot(double x_min, double x_max, double y_min,
                            double y_max) {
   QString input_label_text = ui->label_input->text();
-  if (is_calc_done == true) {
-    input_label_text.resize(input_label_text.length() - 2);
-  }
-  char* str_for_calc = new char(input_label_text.length());
   QByteArray tmp_byte_array = input_label_text.toLatin1();
-
+  tmp_byte_array.replace(" ", "");
+  tmp_byte_array.replace("=", "");
+  char* str_for_calc = new char(input_label_text.length());
   strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
 
-  double variable = ui->doubleSpinBox_var->value();
+  int error = OK;
+  double variable = 0.0;
   double result = 0.0;
   node_t* q_root = NULL;
-
-  int error = convert_infix_to_RPN(str_for_calc, &q_root);
-  if (error == OK) {
-    error = evaluate_expression(q_root, variable, &result);
-  }
+  error = convert_infix_to_RPN(str_for_calc, &q_root);
 
   QVector<double> x, y;
   if (error != OK) {
@@ -528,10 +521,14 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
       variable += step_size;
     }
 
-    ui->expression_graph->expression_graph();
-    ui->expression_graph->graph(0)->setData(x, y);
     ui->expression_graph->xAxis->setRange(x_min, x_max);
     ui->expression_graph->yAxis->setRange(y_min, y_max);
+    ui->expression_graph->expression_graph();
+    ui->expression_graph->graph(0)->setData(x, y);
+    QPen pen;
+    pen.setColor(QColor(114, 215, 151));
+    pen.setWidth(2);
+    ui->expression_graph->graph(0)->setPen(pen);
     ui->expression_graph->replot();
   }
   delete str_for_calc;

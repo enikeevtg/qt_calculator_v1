@@ -7,7 +7,7 @@ START_TEST(test_smart_calc_1) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
 
   ck_assert_double_eq(result, 3.5);
 }
@@ -20,7 +20,7 @@ START_TEST(test_smart_calc_2) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq((int)result, 5598726);
 }
 END_TEST
@@ -32,7 +32,7 @@ START_TEST(test_smart_calc_3) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq(result, 285.456);
 }
 END_TEST
@@ -44,7 +44,7 @@ START_TEST(test_smart_calc_4) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq(result, 6);
 }
 END_TEST
@@ -57,7 +57,7 @@ START_TEST(test_smart_calc_5) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq(result, 10);
 }
 END_TEST
@@ -69,7 +69,7 @@ START_TEST(test_smart_calc_6) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, -1.41614683655, 1e-06);
 }
 END_TEST
@@ -83,7 +83,7 @@ START_TEST(test_smart_calc_7) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, -1.83907152908, 1e-06);
 }
 END_TEST
@@ -95,7 +95,7 @@ START_TEST(test_smart_calc_8) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 0.909297, 1e-06);
 }
 END_TEST
@@ -107,7 +107,7 @@ START_TEST(test_smart_calc_9) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq(result, 0);
 }
 END_TEST
@@ -119,7 +119,7 @@ START_TEST(test_smart_calc_10) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 10, 1e-06);
 }
 END_TEST
@@ -131,7 +131,7 @@ START_TEST(test_smart_calc_11) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 10, 1e-06);
 }
 END_TEST
@@ -155,7 +155,7 @@ START_TEST(test_smart_calc_13) {
   double variable = 0.0019;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 1.567, 1e-03);
 }
 END_TEST
@@ -167,7 +167,7 @@ START_TEST(test_smart_calc_14) {
   double variable = 0.0019;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 0.00379998, 1e-06);
 }
 END_TEST
@@ -179,7 +179,7 @@ START_TEST(test_smart_calc_15) {
   double variable = 0.004;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 0.00800017, 1e-06);
 }
 END_TEST
@@ -191,7 +191,7 @@ START_TEST(test_smart_calc_16) {
   double variable = 25;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq_tol(result, 7.07107, 1e-05);
 }
 END_TEST
@@ -203,7 +203,7 @@ START_TEST(test_smart_calc_17) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_double_eq(result, 7.8);
 }
 END_TEST
@@ -215,7 +215,7 @@ START_TEST(test_smart_calc_18) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq((int)result, 1);
 }
 END_TEST
@@ -227,7 +227,7 @@ START_TEST(test_smart_calc_19) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq((int)result, -4);
 }
 END_TEST
@@ -239,7 +239,7 @@ START_TEST(test_smart_calc_20) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq((int)result, -18);
 }
 
@@ -250,7 +250,7 @@ START_TEST(test_smart_calc_21) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq((int)result, -4);
 }
 END_TEST
@@ -262,7 +262,7 @@ START_TEST(test_smart_calc_22) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq(result, 2);
 }
 END_TEST
@@ -274,19 +274,21 @@ START_TEST(test_smart_calc_23) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq(result, -7687367.073);
 }
 END_TEST
 
 START_TEST(test_smart_calc_24) {
-  char input[255] = "15/(7-(1+1))*3-(2+(1+1))*15/(7-(200+1))*3-(2+(1+1))*(15/(7-(1+1))*3-(2+(1+1))+15/(7-(1+1))*3-(2+(1+1)))";
+  char input[255] =
+      "15/(7-(1+1))*3-(2+(1+1))*15/(7-(200+1))*3-(2+(1+1))*(15/"
+      "(7-(1+1))*3-(2+(1+1))+15/(7-(1+1))*3-(2+(1+1)))";
   node_t* q_root = NULL;
   double result = 0;
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq(result, -30.07);
 }
 END_TEST
@@ -298,7 +300,7 @@ START_TEST(test_smart_calc_25) {
   double variable = 0;
 
   convert_infix_to_RPN(input, &q_root);
-  evaluate_expression(q_root, variable, &result); 
+  evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq(result, 0.84);
 }
 END_TEST
@@ -310,7 +312,7 @@ START_TEST(test_smart_calc_26) {
   double variable = 0;
 
   int error = convert_infix_to_RPN(input, &q_root);
-  if (!error) error = evaluate_expression(q_root, variable, &result); 
+  if (!error) error = evaluate_expression(q_root, variable, &result);
   ck_assert_int_eq(error, INCORRECT_INPUT);
 }
 END_TEST
@@ -411,11 +413,10 @@ START_TEST(test_smart_calc_34) {
 }
 END_TEST
 
-
 Suite* yakov_tests() {
-  Suite *s = suite_create("yakov tests ");
+  Suite* s = suite_create("yakov tests ");
 
-  TCase *tc1_1 = tcase_create("all test cases ");
+  TCase* tc1_1 = tcase_create("all test cases ");
   tcase_add_test(tc1_1, test_smart_calc_1);
   tcase_add_test(tc1_1, test_smart_calc_2);
   tcase_add_test(tc1_1, test_smart_calc_3);

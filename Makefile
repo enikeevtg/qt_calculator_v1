@@ -26,16 +26,14 @@ endif
 GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 
 # FILENAMES
-ATTEMPT_DIR = ./sources/00_attempt_at_writing/
-DATA_STRUCT_DIR = ./sources/01_data_structs_processing/
-EVAL_DIR = ./sources/02_evaluations/
+SRC_DIR = ./sources/
+BUILD_DIR = build/
+ATTEMPT_DIR = $(SRC_DIR)00_attempt_at_writing/
+DATA_STRUCT_DIR = $(SRC_DIR)01_data_structs_processing/
+EVAL_DIR = $(SRC_DIR)02_evaluations/
 SRC = $(wildcard $(DATA_STRUCT_DIR)*.c)
 SRC += $(wildcard $(EVAL_DIR)*.c)
-OBJ_DIR = ./sources/04_obj/
-OBJ = $(patsubst $(DATA_STRUCT_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
-OBJ += $(patsubst $(EVAL_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
-MAN_TESTS_DIR = ./04_man_tests/
-TESTS_DIR = ./sources/03_tests/
+TESTS_DIR = $(SRC_DIR)03_tests/
 TESTS_SRC = $(wildcard $(TESTS_DIR)*.c)
 TEST_EXE = ./tests_runner
 APP = SmartCalc_v1.app
@@ -46,11 +44,13 @@ all: clean install launch
 # TESTS
 test: clean
 	@$(CC) $(CF) $(ASAN) $(TESTS_SRC) $(SRC) -o $(TEST_EXE) $(TEST_FLAGS)
-	./$(TEST_EXE)
+	$(TEST_EXE)
 
 leaks: clean
 	@$(CC) $(CF) $(ASAN) $(TESTS_SRC) $(SRC) -o $(TEST_EXE) $(TEST_FLAGS)
 	@$(LEAKS) $(TEST_EXE)
+
+valgrind:
 
 gcov: gcov_report
 
@@ -66,16 +66,16 @@ gcov_report: clean
 # APP
 install:
 	$(MK) build
-	cd sources/ && qmake && make && make clean && cp -r $(APP) ../build
+	cd $(SRC_DIR) && qmake && make && make clean && cp -r $(APP) ../build
 
 launch:
-	open build/$(APP)
+	open $(BUILD_DIR)$(APP)
 
 uninstall:
 	rm -rf build
 
 dvi:
-	open ./sources/readme.html
+	open $(SRC_DIR)readme.html
 
 dist:
 	@if [ ! -d build ] ; then echo "creating build" ; make install; fi
@@ -83,16 +83,16 @@ dist:
 
 # SERVICES
 style:
-	clang-format --style=google -n smart_calc.h data_structures.h $(SRC) $(TESTS_SRC)
+	clang-format --style=google -n $(SRC_DIR)*.h $(SRC_DIR)*.cpp $(SRC) $(TESTS_SRC)
 
 gost:
-	clang-format --style=google -i smart_calc.h data_structures.h $(SRC) $(TESTS_SRC)
+	clang-format --style=google -i $(SRC_DIR)*.h $(SRC_DIR)*.cpp $(SRC) $(TESTS_SRC)
 
 clean:
 	@$(RM) a.out *.tar
 	@$(RM) $(OBJ_DIR)
 	@$(RM) *.gcno *.gcda
 	@$(RM) *.dSYM
-	@$(RM) ./sources/*.o
+	@$(RM) $(SRC_DIR)*.o
 	@$(RM) ./report/
 	@$(RM) $(TEST_EXE)

@@ -75,7 +75,7 @@ uninstall:
 	rm -rf build
 
 dvi:
-	open ./readme.html
+	open ./sources/readme.html
 
 dist:
 	@if [ ! -d build ] ; then echo "creating build" ; make install; fi

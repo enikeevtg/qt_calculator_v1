@@ -36,7 +36,7 @@ SRC += $(wildcard $(EVAL_DIR)*.c)
 TESTS_DIR = $(SRC_DIR)03_tests/
 TESTS_SRC = $(wildcard $(TESTS_DIR)*.c)
 TEST_EXE = ./tests_runner
-APP = SmartCalc_v1.app
+APP = qt_calculator_v1.app
 
 # BUILD
 all: clean install launch
@@ -89,10 +89,10 @@ gost:
 	clang-format --style=google -i $(SRC_DIR)*.h $(SRC_DIR)*.cpp $(SRC) $(TESTS_SRC)
 
 clean:
-	@$(RM) a.out *.tar
 	@$(RM) $(OBJ_DIR)
-	@$(RM) *.gcno *.gcda
-	@$(RM) *.dSYM
 	@$(RM) $(SRC_DIR)*.o
 	@$(RM) ./report/
+	@$(RM) *.dSYM
+	@$(RM) a.out *.tar
+	@$(RM) *.gcno *.gcda
 	@$(RM) $(TEST_EXE)

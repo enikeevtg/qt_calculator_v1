@@ -27,7 +27,7 @@ GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 
 # FILENAMES
 SRC_DIR = ./sources/
-BUILD_DIR = build/
+BUILD_DIR = ./build/
 ATTEMPT_DIR = $(SRC_DIR)00_attempt_at_writing/
 DATA_STRUCT_DIR = $(SRC_DIR)01_data_structs_processing/
 EVAL_DIR = $(SRC_DIR)02_evaluations/
@@ -65,24 +65,24 @@ gcov_report: clean
 
 # APP
 install:
-	$(MK) build
-	cd $(SRC_DIR) && qmake && make && make clean && mv $(APP) ../$(BUILD_DIR)
+	$(MK) $(BUILD_DIR)
+	cd $(BUILD_DIR) && qmake ../$(SRC_DIR)qt_calculator_v1.pro && make && make clean && rm -rf .qmake.stash Makefile
 
 launch:
 	open $(BUILD_DIR)$(APP)
 
 uninstall:
-	rm -rf build
+	rm -rf $(BUILD_DIR)
 
 dvi:
 	open $(SRC_DIR)readme.html
 
 dist:
-	@if [ ! -d build ] ; then echo "creating build" ; make install; fi
-	@if [ -d build ] ; then tar -zcvf archive.tar build; else echo "build not exists, error!"; exit 1; fi
+	@if [ ! -d $(BUILD_DIR)$(APP) ] ; then echo "creating build" ; make install; fi
+	@if [ -d $(BUILD_DIR) ] ; then tar -zcvf archive.tar build; else echo "build not exists, error!"; exit 1; fi
 
 app_leaks:
-	$(LEAKS) ./$(BUILD_DIR)$(APP)/Contents/MacOS/qt_calculator_v1
+	$(LEAKS) $(BUILD_DIR)$(APP)/Contents/MacOS/qt_calculator_v1
 
 # SERVICES
 style:

@@ -529,10 +529,9 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
     pen.setWidth(2);
     ui->expression_graph->graph(0)->setPen(pen);
     ui->expression_graph->replot();
-    ui->expression_graph->removeGraph(0);
   }
 }
-
+// line 534
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRAPH
 // double stepSizeCalculation(QVector<double> x, QVector<double> y, double

@@ -104,6 +104,7 @@ void MainWindow::on_pushButton_AC_clicked() {
   ui->expression_graph->xAxis->setRange(0, 21);
   ui->expression_graph->yAxis->setRange(0, 21);
   ui->expression_graph->removeGraph(0);
+  ui->expression_graph->replot();
 
   is_num_input = true;
   is_var_input = false;
@@ -445,8 +446,7 @@ void MainWindow::on_pushButton_calc_clicked() {
   QString input_label_text = ui->label_input->text();
   QByteArray tmp_byte_array = input_label_text.toLatin1();
   tmp_byte_array.replace(" ", "");
-  char* str_for_calc = new char(input_label_text.length());
-  strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
+  char* str_for_calc = tmp_byte_array.data();
 
   int error = OK;
   double variable = ui->doubleSpinBox_var->value();
@@ -468,7 +468,6 @@ void MainWindow::on_pushButton_calc_clicked() {
   ui->label_input->setText(input_label_text + " =");
   ui->label_output->setText(result_string);
   is_calc_done = true;
-  delete str_for_calc;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -492,14 +491,14 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
   QByteArray tmp_byte_array = input_label_text.toLatin1();
   tmp_byte_array.replace(" ", "");
   tmp_byte_array.replace("=", "");
-  char* str_for_calc = new char(input_label_text.length());
-  strlcpy(str_for_calc, tmp_byte_array, input_label_text.length() + 1);
+  char* str_for_calc = tmp_byte_array.data();
 
   int error = OK;
   double variable = 0.0;
   double result = 0.0;
   node_t* q_root = NULL;
   error = convert_infix_to_RPN(str_for_calc, &q_root);
+  remove_struct(&q_root);
 
   QVector<double> x, y;
   if (error != OK) {
@@ -530,10 +529,8 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
     pen.setWidth(2);
     ui->expression_graph->graph(0)->setPen(pen);
     ui->expression_graph->replot();
+    ui->expression_graph->removeGraph(0);
   }
-  delete str_for_calc;
-  x.clear();
-  y.clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -317,6 +317,7 @@ DIST          = /usr/local/share/qt/mkspecs/features/spec_pre.prf \
 		/usr/local/share/qt/mkspecs/features/qt_config.prf \
 		/usr/local/share/qt/mkspecs/macx-clang/qmake.conf \
 		/usr/local/share/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/local/share/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/local/share/qt/mkspecs/features/mac/sdk.prf \
 		/usr/local/share/qt/mkspecs/features/toolchain.prf \
@@ -344,8 +345,10 @@ DIST          = /usr/local/share/qt/mkspecs/features/spec_pre.prf \
 		/usr/local/share/qt/mkspecs/features/exceptions.prf \
 		/usr/local/share/qt/mkspecs/features/yacc.prf \
 		/usr/local/share/qt/mkspecs/features/lex.prf \
-		qt_calculator_v1.pro mainwindow.h \
-		qcustomplot.h 01_data_structs_processing/fill_node.c \
+		qt_calculator_v1.pro data_structures.h \
+		mainwindow.h \
+		qcustomplot.h \
+		smart_calc.h 01_data_structs_processing/fill_node.c \
 		01_data_structs_processing/move_node.c \
 		01_data_structs_processing/pop.c \
 		01_data_structs_processing/push.c \
@@ -371,7 +374,7 @@ TARGET        = qt_calculator_v1.app/Contents/MacOS/qt_calculator_v1
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 12.1
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
-EXPORT__QMAKE_STASH_ = 
+EXPORT__QMAKE_STASH_ = /opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/qt_calculator_v1/sources/.qmake.stash
 EXPORT_VALID_ARCHS = x86_64
 EXPORT_DEFAULT_ARCHS = x86_64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -613,6 +616,7 @@ Makefile: qt_calculator_v1.pro /usr/local/share/qt/mkspecs/macx-clang/qmake.conf
 		/usr/local/share/qt/mkspecs/features/qt_config.prf \
 		/usr/local/share/qt/mkspecs/macx-clang/qmake.conf \
 		/usr/local/share/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/local/share/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/local/share/qt/mkspecs/features/mac/sdk.prf \
 		/usr/local/share/qt/mkspecs/features/toolchain.prf \
@@ -872,6 +876,7 @@ Makefile: qt_calculator_v1.pro /usr/local/share/qt/mkspecs/macx-clang/qmake.conf
 /usr/local/share/qt/mkspecs/features/qt_config.prf:
 /usr/local/share/qt/mkspecs/macx-clang/qmake.conf:
 /usr/local/share/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/local/share/qt/mkspecs/features/exclusive_builds.prf:
 /usr/local/share/qt/mkspecs/features/mac/sdk.prf:
 /usr/local/share/qt/mkspecs/features/toolchain.prf:
@@ -934,7 +939,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/share/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h qcustomplot.h $(DISTDIR)/
+	$(COPY_FILE) --parents data_structures.h mainwindow.h qcustomplot.h smart_calc.h $(DISTDIR)/
 	$(COPY_FILE) --parents 01_data_structs_processing/fill_node.c 01_data_structs_processing/move_node.c 01_data_structs_processing/pop.c 01_data_structs_processing/push.c 01_data_structs_processing/remove_head_node.c 01_data_structs_processing/remove_struct.c 02_evaluations/01_convert_infix_to_RPN.c 02_evaluations/02_close_bracket_processing.c 02_evaluations/03_end_of_expression_processing.c 02_evaluations/04_token_processing.c 02_evaluations/05_container_packing.c 02_evaluations/06_create_mult.c 02_evaluations/07_container_sending.c 02_evaluations/08_evaluate_expression.c 02_evaluations/09_numerical_calculation.c main.cpp mainwindow.cpp qcustomplot.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
@@ -946,6 +951,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r qt_calculator_v1.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 

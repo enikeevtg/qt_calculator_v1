@@ -66,7 +66,7 @@ gcov_report: clean
 # APP
 install:
 	$(MK) build
-	cd $(SRC_DIR) && qmake && make && make clean && cp -r $(APP) ../build
+	cd $(SRC_DIR) && qmake && make && make clean && mv $(APP) ../$(BUILD_DIR)
 
 launch:
 	open $(BUILD_DIR)$(APP)
@@ -80,6 +80,9 @@ dvi:
 dist:
 	@if [ ! -d build ] ; then echo "creating build" ; make install; fi
 	@if [ -d build ] ; then tar -zcvf archive.tar build; else echo "build not exists, error!"; exit 1; fi
+
+app_leaks:
+	$(LEAKS) ./$(BUILD_DIR)$(APP)/Contents/MacOS/qt_calculator_v1
 
 # SERVICES
 style:

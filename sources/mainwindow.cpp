@@ -102,25 +102,17 @@ void MainWindow::on_pushButton_AC_clicked() {
   ui->doubleSpinBox_ymin->setValue(-11.0);
   ui->doubleSpinBox_ymax->setValue(11.0);
   ui->expression_graph->xAxis->setRange(0, 21);
-  ui->expression_graph->yAxis->setRange(0, 21);
+  ui->expression_graph->yAxis->setRange(-11, 11);
   ui->expression_graph->removeGraph(0);
   ui->expression_graph->replot();
 
-  is_num_input = true;
-  is_var_input = false;
   is_dot_input = false;
-  is_op_input = false;
-  is_pow_input = false;
   is_u_minus_input = false;
-  is_open_bracket_input = false;
-  is_close_bracket_input = false;
   brackets_counter = 0;
-  is_mfunc_input = false;
-  is_calc_done = false;
 }
 
 void MainWindow::on_pushButton_delete_prev_clicked() {
-  if (is_calc_done == true) {
+  if (last_token_type == calculation) {
     on_pushButton_AC_clicked();
   }
 
@@ -155,27 +147,20 @@ void MainWindow::on_pushButton_delete_prev_clicked() {
 }
 
 void MainWindow::lastTokenChecking() {
-  is_num_input = false;
-  is_dot_input = false;
-  is_op_input = false;
-  is_pow_input = false;
-  is_u_minus_input = false;
-  is_open_bracket_input = false;
-  is_close_bracket_input = false;
-  is_mfunc_input = false;
-  is_calc_done = false;
-
   QString last_label_char = ui->label_input->text().last(1);
 
+  is_dot_input = false;
+  is_u_minus_input = false;
+
   if (last_label_char == " ") {
-    is_op_input = true;
-  } else if (last_label_char == "(") {
-    is_open_bracket_input = true;
-  } else if (last_label_char == ")") {
-    is_close_bracket_input = true;
+    last_token_type = op_token;
   } else if (last_label_char == "-") {
-    is_op_input = true;
+    last_token_type = op_token;
     is_u_minus_input = true;
+  } else if (last_label_char == "(") {
+    last_token_type = open_bracket_token;
+  } else if (last_label_char == ")") {
+    last_token_type = close_bracket_token;
   } else {
     QString input_label_text = ui->label_input->text();
     size_t input_text_length = input_label_text.length();
@@ -187,16 +172,16 @@ void MainWindow::lastTokenChecking() {
       }
       i--;
     }
-    is_num_input = true;
+    last_token_type = num_token;
   }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DIGITS AND VARIABLE
 void MainWindow::clickedButtonDigits() {
-  if (is_calc_done == true) {
-    on_pushButton_AC_clicked();
-  }
+    if (last_token_type == calculation) {
+      on_pushButton_AC_clicked();
+    }
 
   QPushButton* button = (QPushButton*)sender();
 
@@ -207,26 +192,22 @@ void MainWindow::clickedButtonDigits() {
               ui->label_input->text().last(2) == "-0" ||
               ui->label_input->text().last(2) == " 0")) {
   } else {
-    if (is_close_bracket_input == true || is_var_input == true) {
+    if (last_token_type == var_token || last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + button->text());
   }
-  is_num_input = true;
-  is_var_input = false;
-  is_op_input = false;
+  last_token_type = num_token;
   is_u_minus_input = false;
-  is_open_bracket_input = false;
-  is_close_bracket_input = false;
 }
 
 void MainWindow::on_pushButton_dot_clicked() {
-  if (is_calc_done == true) {
-    on_pushButton_AC_clicked();
-  }
+    if (last_token_type == calculation) {
+      on_pushButton_AC_clicked();
+    }
 
-  if (is_dot_input == false && is_var_input == false) {
-    if (is_num_input == false) {
+  if (is_dot_input == false && last_token_type !=var_token) {
+    if (last_token_type != num_token) {
       ui->pushButton_0->click();
     }
     ui->label_input->setText(ui->label_input->text() + '.');
@@ -235,7 +216,7 @@ void MainWindow::on_pushButton_dot_clicked() {
 }
 
 void MainWindow::on_pushButton_var_clicked() {
-  if (is_calc_done == true) {
+  if (last_token_type == calculation) {
     on_pushButton_AC_clicked();
   }
 
@@ -246,25 +227,22 @@ void MainWindow::on_pushButton_var_clicked() {
   if (ui->label_input->text() == "0") {
     ui->label_input->setText("x");
   } else {
-    if (is_num_input == true || is_var_input == true ||
-        is_close_bracket_input == true) {
+    if (last_token_type == num_token || last_token_type == var_token ||
+        last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + "x");
   }
-  is_var_input = true;
-  is_op_input = false;
+  last_token_type = var_token;
   is_u_minus_input = false;
-  is_open_bracket_input = false;
-  is_close_bracket_input = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OPERATORS
 void MainWindow::clickedButtonOperations() {
-  if (is_calc_done == true) {
-    on_pushButton_AC_clicked();
-  }
+    if (last_token_type == calculation) {
+      on_pushButton_AC_clicked();
+    }
 
   QPushButton* button = (QPushButton*)sender();
   QString button_text = button->text();
@@ -279,25 +257,23 @@ void MainWindow::clickedButtonOperations() {
   else if (button_text == "mod")
     button_text = "%";
 
-  if (is_op_input == false) {
+  if (last_token_type != op_token) {
     if (last_input_char == ".") {
       ui->pushButton_0->click();
     }
 
-    if ((ui->label_input->text() == "0" || is_open_bracket_input == true) &&
+    if ((ui->label_input->text() == "0" || last_token_type == open_bracket_token) &&
         button_text == "-") {
       unaryMinusInput();
-    } else if (is_open_bracket_input == false) {
+    } else if (last_token_type != open_bracket_token) {
       operatorInput(button_text);
     }
-  } else {  // is_op_input == true
+  } else {  // last_token_type is op_token
     if (ui->label_input->text() == "-" && button_text != "-") {
       unaryMinusChanging();
-    } else if (is_open_bracket_input == true && button_text != "-") {
-      on_pushButton_delete_prev_clicked();
     } else if (is_u_minus_input == false) {
       on_pushButton_delete_prev_clicked();
-      button->click();
+      operatorInput(button_text);
     }
   }
 }
@@ -305,44 +281,34 @@ void MainWindow::clickedButtonOperations() {
 void MainWindow::unaryMinusInput() {
   if (ui->label_input->text() == "0") {
     ui->label_input->setText("-");
-  } else if (is_open_bracket_input == true) {
+  } else if (last_token_type == open_bracket_token) {
     ui->label_input->setText(ui->label_input->text() + "-");
   }
-  is_num_input = false;
-  is_op_input = true;
+  last_token_type = op_token;
   is_u_minus_input = true;
-  //    is_open_bracket_input = false;
 }
 
 void MainWindow::operatorInput(QString button_text) {
   ui->label_input->setText(ui->label_input->text() + " " + button_text + " ");
-  is_num_input = false;
   is_dot_input = false;
-  is_var_input = false;
-  is_op_input = true;
-  is_open_bracket_input = false;
-  is_close_bracket_input = false;
+  is_u_minus_input = false;
+  last_token_type = op_token;
 }
 
 void MainWindow::unaryMinusChanging() {
   on_pushButton_delete_prev_clicked();
-  if (ui->label_input->text().length() == 0) {
-    ui->pushButton_0->click();
-  }
-  is_op_input = false;
-  is_open_bracket_input = false;
-  is_close_bracket_input = false;
+  ui->pushButton_0->click();
 }
 
 void MainWindow::on_pushButton_op_pow_clicked() {
-  if (is_calc_done == true) {
+  if (last_token_type == calculation) {
     on_pushButton_AC_clicked();
   }
 
-  if (is_num_input == true || is_close_bracket_input == true ||
-      is_var_input == true || ui->label_input->text() == "0") {
+  if (last_token_type == num_token || last_token_type == close_bracket_token ||
+      last_token_type == var_token || ui->label_input->text() == "0") {
     ui->label_input->setText(ui->label_input->text() + "^");
-    is_pow_input = true;
+    last_token_type = pow_token;
     on_pushButton_open_bracket_clicked();
   }
 }
@@ -350,48 +316,41 @@ void MainWindow::on_pushButton_op_pow_clicked() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BRACKETS
 void MainWindow::on_pushButton_open_bracket_clicked() {
-  if (is_calc_done == true) {
+  if (last_token_type == calculation) {
     on_pushButton_AC_clicked();
   }
 
   if (ui->label_input->text() == "0") {
     ui->label_input->setText("(");
-  } else if (is_u_minus_input == true || is_mfunc_input == true ||
-             is_open_bracket_input == true || is_pow_input == true) {
+  } else if (is_u_minus_input == true || last_token_type == math_func_token ||
+             last_token_type == open_bracket_token || last_token_type == pow_token) {
     ui->label_input->setText(ui->label_input->text() + "(");
   } else {
-    if (is_num_input == true || is_var_input == true || is_close_bracket_input == true) {
+    if (last_token_type == num_token || last_token_type == var_token || last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + "(");
   }
 
-  is_num_input = false;
-  is_var_input = false;
   is_dot_input = false;
-  is_op_input = false;
-  is_pow_input = false;
   is_u_minus_input = false;
-  is_open_bracket_input = true;
-  is_close_bracket_input = false;
+  last_token_type = open_bracket_token;
   brackets_counter++;
-  is_mfunc_input = false;
 }
 
 void MainWindow::on_pushButton_close_bracket_clicked() {
-  if (is_calc_done == true) {
+  if (last_token_type == calculation) {
     on_pushButton_AC_clicked();
   }
 
-  if (brackets_counter > 0 && is_op_input == false &&
-      is_u_minus_input == false && is_open_bracket_input == false) {
+  if (brackets_counter > 0 && last_token_type != op_token &&
+      is_u_minus_input == false && last_token_type != open_bracket_token) {
     if (is_dot_input == true) {
       ui->pushButton_0->click();
     }
     ui->label_input->setText(ui->label_input->text() + ")");
 
-    is_num_input = false;
-    is_close_bracket_input = true;
+    last_token_type = close_bracket_token;
     brackets_counter--;
   }
 }
@@ -399,9 +358,9 @@ void MainWindow::on_pushButton_close_bracket_clicked() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MATH FUNCTIONS
 void MainWindow::on_pushButton_mfunc_inv_clicked() {
-  if (is_calc_done == true) {
-    on_pushButton_AC_clicked();
-  }
+    if (last_token_type == calculation) {
+      on_pushButton_AC_clicked();
+    }
 
   if (ui->pushButton_mfunc_inv->isChecked()) {
     ui->pushButton_mfunc_cos->setText("acos");
@@ -415,9 +374,9 @@ void MainWindow::on_pushButton_mfunc_inv_clicked() {
 }
 
 void MainWindow::clickedButtonMathFunctions() {
-  if (is_calc_done == true) {
-    on_pushButton_AC_clicked();
-  }
+    if (last_token_type == calculation) {
+      on_pushButton_AC_clicked();
+    }
 
   QPushButton* button = (QPushButton*)sender();
   QString button_text = button->text();
@@ -427,21 +386,21 @@ void MainWindow::clickedButtonMathFunctions() {
   if (ui->label_input->text() == "0") {
     ui->label_input->setText(button_text);
   } else {
-    if (is_num_input == true || is_close_bracket_input == true) {
+    if (last_token_type == num_token || last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + button_text);
   }
-  is_mfunc_input = true;
+  last_token_type = math_func_token;
   on_pushButton_open_bracket_clicked();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CALCULATIONS LAUNCH
 void MainWindow::on_pushButton_calc_clicked() {
-  if (is_calc_done == true) {
-    on_pushButton_AC_clicked();
-  }
+    if (last_token_type == calculation) {
+      on_pushButton_AC_clicked();
+    }
 
   QString input_label_text = ui->label_input->text();
   QByteArray tmp_byte_array = input_label_text.toLatin1();
@@ -467,7 +426,7 @@ void MainWindow::on_pushButton_calc_clicked() {
 
   ui->label_input->setText(input_label_text + " =");
   ui->label_output->setText(result_string);
-  is_calc_done = true;
+  last_token_type = calculation;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,7 +457,7 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
   double result = 0.0;
   node_t* q_root = NULL;
   error = convert_infix_to_RPN(str_for_calc, &q_root);
-  remove_struct(&q_root);
+//  remove_struct(&q_root);
 
   QVector<double> x, y;
   if (error != OK) {

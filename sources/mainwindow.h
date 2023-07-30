@@ -52,18 +52,10 @@ class MainWindow : public QMainWindow {
   Ui::MainWindow *ui;
 
   enum { num_token, var_token, op_token, pow_token, open_bracket_token, close_bracket_token, math_func_token, calculation };
-  int last_token_is = num_token;
+  int last_token_type = num_token;
 
-  bool is_num_input = true;
-  bool is_var_input = false;
   bool is_dot_input = false;
-  bool is_op_input = false;
-  bool is_pow_input = false;
   bool is_u_minus_input = false;
-  bool is_open_bracket_input = false;
-  bool is_close_bracket_input = false;
   int brackets_counter = 0;
-  bool is_mfunc_input = false;
-  bool is_calc_done = false;
 };
 #endif  // MAINWINDOW_H

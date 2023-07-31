@@ -3,8 +3,9 @@
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
-  QApplication a(argc, argv);
-  MainWindow w;
-  w.show();
-  return a.exec();
+  QApplication app(argc, argv);
+  MainWindow window_smart_calc;
+  window_smart_calc.setFixedSize(1090, 687);
+  window_smart_calc.show();
+  return app.exec();
 }

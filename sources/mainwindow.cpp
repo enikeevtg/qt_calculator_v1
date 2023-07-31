@@ -5,6 +5,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+
   // INPUT_LABEL
   ui->label_input->setWordWrap(true);
 
@@ -87,9 +88,15 @@ MainWindow::MainWindow(QWidget* parent)
   ui->expression_graph->setBackground(QColor(58, 70, 90));
   ui->expression_graph->xAxis->setRange(0.0, 21.0);
   ui->expression_graph->yAxis->setRange(-11.0, 11.0);
+
+  // TOOLBAR
+  ui->toolBar->setMovable(false);
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  //  delete window_credit_calc;
+  delete ui;
+}
 
 // SERVICE
 void MainWindow::on_pushButton_AC_clicked() {
@@ -161,6 +168,8 @@ void MainWindow::lastTokenChecking() {
     last_token_type = open_bracket_token;
   } else if (last_label_char == ")") {
     last_token_type = close_bracket_token;
+  } else if (last_label_char == "x") {
+    last_token_type = var_token;
   } else {
     QString input_label_text = ui->label_input->text();
     size_t input_text_length = input_label_text.length();
@@ -179,9 +188,9 @@ void MainWindow::lastTokenChecking() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DIGITS AND VARIABLE
 void MainWindow::clickedButtonDigits() {
-    if (last_token_type == calculation) {
-      on_pushButton_AC_clicked();
-    }
+  if (last_token_type == calculation) {
+    on_pushButton_AC_clicked();
+  }
 
   QPushButton* button = (QPushButton*)sender();
 
@@ -192,7 +201,8 @@ void MainWindow::clickedButtonDigits() {
               ui->label_input->text().last(2) == "-0" ||
               ui->label_input->text().last(2) == " 0")) {
   } else {
-    if (last_token_type == var_token || last_token_type == close_bracket_token) {
+    if (last_token_type == var_token ||
+        last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + button->text());
@@ -202,11 +212,11 @@ void MainWindow::clickedButtonDigits() {
 }
 
 void MainWindow::on_pushButton_dot_clicked() {
-    if (last_token_type == calculation) {
-      on_pushButton_AC_clicked();
-    }
+  if (last_token_type == calculation) {
+    on_pushButton_AC_clicked();
+  }
 
-  if (is_dot_input == false && last_token_type !=var_token) {
+  if (is_dot_input == false && last_token_type != var_token) {
     if (last_token_type != num_token) {
       ui->pushButton_0->click();
     }
@@ -234,15 +244,15 @@ void MainWindow::on_pushButton_var_clicked() {
     ui->label_input->setText(ui->label_input->text() + "x");
   }
   last_token_type = var_token;
-  is_u_minus_input = false;
+  //  is_u_minus_input = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OPERATORS
 void MainWindow::clickedButtonOperations() {
-    if (last_token_type == calculation) {
-      on_pushButton_AC_clicked();
-    }
+  if (last_token_type == calculation) {
+    on_pushButton_AC_clicked();
+  }
 
   QPushButton* button = (QPushButton*)sender();
   QString button_text = button->text();
@@ -262,7 +272,8 @@ void MainWindow::clickedButtonOperations() {
       ui->pushButton_0->click();
     }
 
-    if ((ui->label_input->text() == "0" || last_token_type == open_bracket_token) &&
+    if ((ui->label_input->text() == "0" ||
+         last_token_type == open_bracket_token) &&
         button_text == "-") {
       unaryMinusInput();
     } else if (last_token_type != open_bracket_token) {
@@ -323,10 +334,12 @@ void MainWindow::on_pushButton_open_bracket_clicked() {
   if (ui->label_input->text() == "0") {
     ui->label_input->setText("(");
   } else if (is_u_minus_input == true || last_token_type == math_func_token ||
-             last_token_type == open_bracket_token || last_token_type == pow_token) {
+             last_token_type == open_bracket_token ||
+             last_token_type == pow_token) {
     ui->label_input->setText(ui->label_input->text() + "(");
   } else {
-    if (last_token_type == num_token || last_token_type == var_token || last_token_type == close_bracket_token) {
+    if (last_token_type == num_token || last_token_type == var_token ||
+        last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + "(");
@@ -358,9 +371,9 @@ void MainWindow::on_pushButton_close_bracket_clicked() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MATH FUNCTIONS
 void MainWindow::on_pushButton_mfunc_inv_clicked() {
-    if (last_token_type == calculation) {
-      on_pushButton_AC_clicked();
-    }
+  if (last_token_type == calculation) {
+    on_pushButton_AC_clicked();
+  }
 
   if (ui->pushButton_mfunc_inv->isChecked()) {
     ui->pushButton_mfunc_cos->setText("acos");
@@ -374,9 +387,9 @@ void MainWindow::on_pushButton_mfunc_inv_clicked() {
 }
 
 void MainWindow::clickedButtonMathFunctions() {
-    if (last_token_type == calculation) {
-      on_pushButton_AC_clicked();
-    }
+  if (last_token_type == calculation) {
+    on_pushButton_AC_clicked();
+  }
 
   QPushButton* button = (QPushButton*)sender();
   QString button_text = button->text();
@@ -386,7 +399,8 @@ void MainWindow::clickedButtonMathFunctions() {
   if (ui->label_input->text() == "0") {
     ui->label_input->setText(button_text);
   } else {
-    if (last_token_type == num_token || last_token_type == close_bracket_token) {
+    if (last_token_type == num_token || last_token_type == var_token ||
+        last_token_type == close_bracket_token) {
       ui->pushButton_op_mult->click();
     }
     ui->label_input->setText(ui->label_input->text() + button_text);
@@ -398,9 +412,9 @@ void MainWindow::clickedButtonMathFunctions() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CALCULATIONS LAUNCH
 void MainWindow::on_pushButton_calc_clicked() {
-    if (last_token_type == calculation) {
-      on_pushButton_AC_clicked();
-    }
+  if (last_token_type == calculation) {
+    on_pushButton_AC_clicked();
+  }
 
   QString input_label_text = ui->label_input->text();
   QByteArray tmp_byte_array = input_label_text.toLatin1();
@@ -457,7 +471,7 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
   double result = 0.0;
   node_t* q_root = NULL;
   error = convert_infix_to_RPN(str_for_calc, &q_root);
-//  remove_struct(&q_root);
+  remove_struct(&q_root);
 
   QVector<double> x, y;
   if (error != OK) {
@@ -552,3 +566,17 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
 //    x.clear();
 //    y.clear();
 //}
+
+// void MainWindow::on_actionCreditCalculator_triggered()
+//{
+//     CreditCalcWindow window;
+//     window.show();
+// }
+
+void MainWindow::on_action_close_triggered() { QApplication::quit(); }
+
+void MainWindow::on_action_credit_calculator_triggered() {
+  window_credit_calc = new CreditCalcWindow();
+  window_credit_calc->setFixedSize(640, 549);
+  window_credit_calc->show();
+}

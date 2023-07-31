@@ -5,9 +5,12 @@
 #include <cstring>
 #include <limits>
 
+#include "creditcalcwindow.h"
+
 extern "C" {
 #include "data_structures.h"
 #include "smart_calc.h"
+//#include "06_credit_calculator/credit_calculator.h"
 }
 
 QT_BEGIN_NAMESPACE
@@ -20,7 +23,7 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
-  MainWindow(QWidget *parent = nullptr);
+  MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
 
  private slots:
@@ -48,12 +51,24 @@ class MainWindow : public QMainWindow {
   void on_pushButton_print_graph_clicked();
   void graphPlot(double x_min, double x_max, double y_min, double y_max);
 
+  void on_action_close_triggered();
+  void on_action_credit_calculator_triggered();
+
  private:
-  Ui::MainWindow *ui;
+  Ui::MainWindow* ui;
+  CreditCalcWindow* window_credit_calc;
 
-  enum { num_token, var_token, op_token, pow_token, open_bracket_token, close_bracket_token, math_func_token, calculation };
+  enum {
+    num_token,
+    var_token,
+    op_token,
+    pow_token,
+    open_bracket_token,
+    close_bracket_token,
+    math_func_token,
+    calculation
+  };
   int last_token_type = num_token;
-
   bool is_dot_input = false;
   bool is_u_minus_input = false;
   int brackets_counter = 0;

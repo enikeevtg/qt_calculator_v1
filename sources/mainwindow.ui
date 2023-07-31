@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1090</width>
-    <height>650</height>
+    <height>711</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="font">
    <font>
@@ -1354,6 +1360,90 @@ QPushButton:pressed {
     </property>
    </widget>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1090</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMode">
+    <property name="title">
+     <string>Mode</string>
+    </property>
+    <addaction name="action_credit_calculator"/>
+    <addaction name="action_deposit_calculator"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action_close"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuMode"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="font">
+    <font>
+     <family>.AppleSystemUIFont</family>
+     <pointsize>21</pointsize>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_credit_calculator"/>
+   <addaction name="action_deposit_calculator"/>
+   <addaction name="action_close"/>
+  </widget>
+  <action name="action_close">
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>21</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="action_credit_calculator">
+   <property name="text">
+    <string>Credit Calculator</string>
+   </property>
+   <property name="toolTip">
+    <string>Credit Calculator</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>21</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="action_deposit_calculator">
+   <property name="text">
+    <string>Deposit Calculator</string>
+   </property>
+   <property name="toolTip">
+    <string>Deposit Calculator</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>21</pointsize>
+    </font>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

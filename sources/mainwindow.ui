@@ -1369,21 +1369,14 @@ QPushButton:pressed {
      <height>24</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMode">
+   <widget class="QMenu" name="menuCalcMode">
     <property name="title">
-     <string>Mode</string>
+     <string>Financial Mode</string>
     </property>
     <addaction name="action_credit_calculator"/>
     <addaction name="action_deposit_calculator"/>
    </widget>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="action_close"/>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuMode"/>
+   <addaction name="menuCalcMode"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="font">
@@ -1403,19 +1396,7 @@ QPushButton:pressed {
    </attribute>
    <addaction name="action_credit_calculator"/>
    <addaction name="action_deposit_calculator"/>
-   <addaction name="action_close"/>
   </widget>
-  <action name="action_close">
-   <property name="text">
-    <string>Close</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Arial Rounded MT Bold</family>
-     <pointsize>21</pointsize>
-    </font>
-   </property>
-  </action>
   <action name="action_credit_calculator">
    <property name="text">
     <string>Credit Calculator</string>

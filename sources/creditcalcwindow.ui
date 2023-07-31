@@ -17,7 +17,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Credit Calculator</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QDoubleSpinBox" name="doubleSpinBox_credit_total_amount">
@@ -152,7 +152,7 @@
      <rect>
       <x>15</x>
       <y>120</y>
-      <width>131</width>
+      <width>171</width>
       <height>42</height>
      </rect>
     </property>
@@ -495,6 +495,19 @@ QPushButton:pressed {
       <string>EUR</string>
      </property>
     </item>
+   </widget>
+   <widget class="QLabel" name="label_percent">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>120</y>
+      <width>42</width>
+      <height>42</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>%</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

@@ -6,11 +6,11 @@
 #include <limits>
 
 #include "creditcalcwindow.h"
+#include "depositcalcwindow.h"
 
 extern "C" {
 #include "data_structures.h"
 #include "smart_calc.h"
-//#include "06_credit_calculator/credit_calculator.h"
 }
 
 QT_BEGIN_NAMESPACE
@@ -51,15 +51,19 @@ class MainWindow : public QMainWindow {
   void on_pushButton_print_graph_clicked();
   void graphPlot(double x_min, double x_max, double y_min, double y_max);
 
-  void on_action_close_triggered();
   void on_action_credit_calculator_triggered();
+  void on_action_deposit_calculator_triggered();
 
- private:
+  void on_expression_graph_destroyed();
+
+private:
   Ui::MainWindow* ui;
   CreditCalcWindow* window_credit_calc;
+  DepositCalcWindow* window_deposit_calc;
 
   enum {
     num_token,
+    dot_token,
     var_token,
     op_token,
     pow_token,

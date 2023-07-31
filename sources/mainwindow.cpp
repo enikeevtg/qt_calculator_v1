@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
 #include "ui_mainwindow.h"
-
+#include <memory>
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 MainWindow::~MainWindow() {
-  //  delete window_credit_calc;
+  delete ui->expression_graph;
   delete ui;
 }
 
@@ -119,16 +119,14 @@ void MainWindow::on_pushButton_AC_clicked() {
 }
 
 void MainWindow::on_pushButton_delete_prev_clicked() {
-  if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
-  }
-
   QString input_label_text = ui->label_input->text();
   size_t input_text_length = input_label_text.length();
   size_t reduced_size = input_text_length - 1;
   QString last_input_char = input_label_text.last(1);
 
-  if (last_input_char == " ") {
+  if (last_token_type == calculation) {
+    reduced_size--;
+  } else if (last_input_char == " ") {
     reduced_size -= 2;
   } else if (last_input_char == "(") {
     while (reduced_size > 0 && input_label_text[reduced_size - 1] != ' ' &&
@@ -140,15 +138,15 @@ void MainWindow::on_pushButton_delete_prev_clicked() {
     if (reduced_size > 0 && input_label_text[reduced_size - 1] == '^') {
       reduced_size--;
     }
+    brackets_counter--;
+  } else if (last_input_char == ")") {
+    brackets_counter++;
   }
   input_label_text.resize(reduced_size);
   ui->label_input->setText(input_label_text);
   if (input_label_text == "") {
     ui->pushButton_0->click();
   } else {
-    if (last_input_char == ")") {
-      brackets_counter++;
-    }
     lastTokenChecking();
   }
 }
@@ -185,11 +183,11 @@ void MainWindow::lastTokenChecking() {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // DIGITS AND VARIABLE
 void MainWindow::clickedButtonDigits() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   QPushButton* button = (QPushButton*)sender();
@@ -213,7 +211,7 @@ void MainWindow::clickedButtonDigits() {
 
 void MainWindow::on_pushButton_dot_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   if (is_dot_input == false && last_token_type != var_token) {
@@ -221,13 +219,14 @@ void MainWindow::on_pushButton_dot_clicked() {
       ui->pushButton_0->click();
     }
     ui->label_input->setText(ui->label_input->text() + '.');
+    last_token_type = dot_token;
     is_dot_input = true;
   }
 }
 
 void MainWindow::on_pushButton_var_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   if (ui->doubleSpinBox_var->isEnabled() == false) {
@@ -244,19 +243,18 @@ void MainWindow::on_pushButton_var_clicked() {
     ui->label_input->setText(ui->label_input->text() + "x");
   }
   last_token_type = var_token;
-  //  is_u_minus_input = false;
+  is_u_minus_input = false;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // OPERATORS
 void MainWindow::clickedButtonOperations() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   QPushButton* button = (QPushButton*)sender();
   QString button_text = button->text();
-  QString last_input_char = ui->label_input->text().last(1);
 
   if (button_text == "×")
     button_text = "*";
@@ -268,7 +266,7 @@ void MainWindow::clickedButtonOperations() {
     button_text = "%";
 
   if (last_token_type != op_token) {
-    if (last_input_char == ".") {
+    if (last_token_type == dot_token) {
       ui->pushButton_0->click();
     }
 
@@ -313,7 +311,11 @@ void MainWindow::unaryMinusChanging() {
 
 void MainWindow::on_pushButton_op_pow_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
+  }
+
+  if (last_token_type == dot_token) {
+      ui->pushButton_0->click();
   }
 
   if (last_token_type == num_token || last_token_type == close_bracket_token ||
@@ -324,11 +326,11 @@ void MainWindow::on_pushButton_op_pow_clicked() {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // BRACKETS
 void MainWindow::on_pushButton_open_bracket_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   if (ui->label_input->text() == "0") {
@@ -353,12 +355,12 @@ void MainWindow::on_pushButton_open_bracket_clicked() {
 
 void MainWindow::on_pushButton_close_bracket_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   if (brackets_counter > 0 && last_token_type != op_token &&
-      is_u_minus_input == false && last_token_type != open_bracket_token) {
-    if (is_dot_input == true) {
+      last_token_type != open_bracket_token) {
+    if (last_token_type == dot_token) {
       ui->pushButton_0->click();
     }
     ui->label_input->setText(ui->label_input->text() + ")");
@@ -368,11 +370,11 @@ void MainWindow::on_pushButton_close_bracket_clicked() {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // MATH FUNCTIONS
 void MainWindow::on_pushButton_mfunc_inv_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   if (ui->pushButton_mfunc_inv->isChecked()) {
@@ -388,7 +390,7 @@ void MainWindow::on_pushButton_mfunc_inv_clicked() {
 
 void MainWindow::clickedButtonMathFunctions() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   QPushButton* button = (QPushButton*)sender();
@@ -413,7 +415,7 @@ void MainWindow::clickedButtonMathFunctions() {
 // CALCULATIONS LAUNCH
 void MainWindow::on_pushButton_calc_clicked() {
   if (last_token_type == calculation) {
-    on_pushButton_AC_clicked();
+    on_pushButton_delete_prev_clicked();
   }
 
   QString input_label_text = ui->label_input->text();
@@ -432,7 +434,7 @@ void MainWindow::on_pushButton_calc_clicked() {
 
   QString result_string;
   if (error == OK) {
-    result_string = QString::number(result);
+    result_string = QString::number(result, 'g');
   } else {
     ERRORS_MESSAGES;
     result_string = errors_msg[error];
@@ -573,10 +575,22 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
 //     window.show();
 // }
 
-void MainWindow::on_action_close_triggered() { QApplication::quit(); }
-
 void MainWindow::on_action_credit_calculator_triggered() {
   window_credit_calc = new CreditCalcWindow();
   window_credit_calc->setFixedSize(640, 549);
   window_credit_calc->show();
 }
+
+void MainWindow::on_action_deposit_calculator_triggered()
+{
+    window_deposit_calc = new DepositCalcWindow();
+    window_deposit_calc->setFixedSize(640, 820);
+    window_deposit_calc->show();
+}
+
+
+void MainWindow::on_expression_graph_destroyed()
+{
+    delete ui->expression_graph;
+}
+

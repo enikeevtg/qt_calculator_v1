@@ -26,6 +26,7 @@ SOURCES += \
     02_evaluations/09_numerical_calculation.c \
     06_credit_calculator/credit_calculator.c \
     creditcalcwindow.cpp \
+    depositcalcwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp
@@ -34,12 +35,14 @@ HEADERS += \
     06_credit_calculator/credit_calculator.h \
     creditcalcwindow.h \
     data_structures.h \
+    depositcalcwindow.h \
     mainwindow.h \
     qcustomplot.h \
     smart_calc.h
 
 FORMS += \
     creditcalcwindow.ui \
+    depositcalcwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.

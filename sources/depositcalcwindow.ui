@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>820</height>
+    <height>910</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>300</y>
+      <x>520</x>
+      <y>620</y>
       <width>531</width>
       <height>241</height>
      </rect>
@@ -35,7 +35,7 @@ p, li { white-space: pre-wrap; }
 &lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-family:'-apple-system','system-ui','Segoe WPC','Segoe UI','system-ui','Ubuntu','Droid Sans','sans-serif'; font-size:14px; color:#d4d4d4;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14px;&quot;&gt;Output: accrued interest, tax amount, deposit amount by the end of the term&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox_credit_rate">
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_deposit_rate">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>35</x>
-      <y>690</y>
+      <y>780</y>
       <width>221</width>
       <height>70</height>
      </rect>
@@ -160,7 +160,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>35</x>
-      <y>570</y>
+      <y>660</y>
       <width>200</width>
       <height>50</height>
      </rect>
@@ -188,7 +188,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>690</y>
+      <y>780</y>
       <width>350</width>
       <height>70</height>
      </rect>
@@ -244,7 +244,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>620</y>
+      <y>710</y>
       <width>350</width>
       <height>70</height>
      </rect>
@@ -272,7 +272,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>570</y>
+      <y>660</y>
       <width>350</width>
       <height>50</height>
      </rect>
@@ -343,7 +343,7 @@ p, li { white-space: pre-wrap; }
      <string>%</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_credit_peroidicity">
+   <widget class="QLabel" name="label_deposit_peroidicity">
     <property name="geometry">
      <rect>
       <x>35</x>
@@ -371,7 +371,7 @@ p, li { white-space: pre-wrap; }
      <number>11</number>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_credit_term">
+   <widget class="QSpinBox" name="spinBox_deposit_term">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -397,7 +397,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>35</x>
-      <y>620</y>
+      <y>710</y>
       <width>200</width>
       <height>70</height>
      </rect>
@@ -449,7 +449,7 @@ p, li { white-space: pre-wrap; }
      <number>11</number>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox_credit_total_amount">
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_deposit_total_amount">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -474,8 +474,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="pushButton_calculate">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>510</y>
+      <x>220</x>
+      <y>600</y>
       <width>200</width>
       <height>42</height>
      </rect>
@@ -548,7 +548,7 @@ QPushButton:pressed {
      <number>11</number>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox_tax_rate">
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_deposit_tax_rate">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -643,12 +643,15 @@ QPushButton:pressed {
      <string>Capitalization of interests</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget_replenishment_list">
+   <widget class="QTableWidget" name="tableWidget_replenishments_list">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>340</y>
-      <width>217</width>
+      <x>70</x>
+      <y>370</y>
+      <width>242</width>
       <height>120</height>
      </rect>
     </property>
@@ -657,27 +660,80 @@ QPushButton:pressed {
       <pointsize>14</pointsize>
      </font>
     </property>
-    <property name="rowCount">
-     <number>1</number>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
     </property>
-    <row/>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTableWidget {
+	background-color: rgb(58, 70, 90);
+}</string>
+    </property>
+    <property name="lineWidth">
+     <number>2</number>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="autoScrollMargin">
+     <number>16</number>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <property name="columnCount">
+     <number>2</number>
+    </property>
+    <attribute name="horizontalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>21</number>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>120</number>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>25</number>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>30</number>
+    </attribute>
     <column>
      <property name="text">
-      <string>month</string>
+      <string>month #</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
       <string>amount</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
     </column>
    </widget>
    <widget class="QTableWidget" name="tableWidget_withdrawals_list">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>340</y>
-      <width>217</width>
+      <x>320</x>
+      <y>370</y>
+      <width>242</width>
       <height>120</height>
      </rect>
     </property>
@@ -686,32 +742,274 @@ QPushButton:pressed {
       <pointsize>14</pointsize>
      </font>
     </property>
-    <property name="rowCount">
-     <number>1</number>
+    <property name="styleSheet">
+     <string notr="true">QTableWidget {
+	background-color: rgb(58, 70, 90);
+}</string>
     </property>
-    <row/>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>120</number>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
     <column>
      <property name="text">
-      <string>month</string>
+      <string>month #</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
       <string>amount</string>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
     </column>
    </widget>
-   <widget class="QToolButton" name="toolButton">
+   <widget class="QPushButton" name="pushButton_add_replenishment">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>470</y>
-      <width>141</width>
-      <height>22</height>
+      <x>70</x>
+      <y>515</y>
+      <width>242</width>
+      <height>32</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgba(255, 255, 255, 0);
+	color: rgb(114, 216, 151)
+}</string>
+    </property>
     <property name="text">
-     <string>...</string>
+     <string>+ add new replenishment</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_add_withdrawal">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>515</y>
+      <width>242</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgba(255, 255, 255, 0);
+	color: rgb(114, 216, 151)
+}</string>
+    </property>
+    <property name="text">
+     <string>+ add new withdrawal</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_remove_last_replenishment">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>547</y>
+      <width>242</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgba(255, 255, 255, 0);
+	color: rgb(114, 216, 151)
+}</string>
+    </property>
+    <property name="text">
+     <string>− remove last replenishment</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_remove_last_withdrawal">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>547</y>
+      <width>242</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgba(255, 255, 255, 0);
+	color: rgb(114, 216, 151)
+}</string>
+    </property>
+    <property name="text">
+     <string>− remove last withdrawal</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_replenishments">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>340</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>21</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: rgb(114, 216, 151);
+}</string>
+    </property>
+    <property name="text">
+     <string>Replenishments</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_withdrawals">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>340</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial Rounded MT Bold</family>
+      <pointsize>21</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: rgb(114, 216, 151);
+}</string>
+    </property>
+    <property name="text">
+     <string>Withdrawals</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="spinBox_replenishment_month">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>490</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSpinBox {
+	border : 2px solid rgb(41, 50, 66);
+	background : rgb(58, 70, 90);
+}</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_replenishments_amount">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>490</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QDoubleSpinBox {
+	border : 2px solid rgb(41, 50, 66);
+	background : rgb(58, 70, 90);
+}</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="spinBox_withdrawals_month">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>490</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSpinBox {
+	border : 2px solid rgb(41, 50, 66);
+	background : rgb(58, 70, 90);
+}</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_withdrawals_amount">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>490</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QDoubleSpinBox {
+	border : 2px solid rgb(41, 50, 66);
+	background : rgb(58, 70, 90);
+}</string>
     </property>
    </widget>
   </widget>
@@ -725,7 +1023,14 @@ QPushButton:pressed {
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>21</pointsize>
+    </font>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -30,13 +30,13 @@ void CreditCalcWindow::on_pushButton_calculate_clicked() {
   ui->statusBar->showMessage("");
   struct credit_input data = {0, 0, 0};
   struct credit_output result = {0, 0, 0, 0};
-  data.total_ammount = ui->doubleSpinBox_credit_total_amount->value();
+  data.total_amount = ui->doubleSpinBox_credit_total_amount->value();
   int scale = 1;
   if (ui->comboBox_term_mode->currentText() == "years") scale = 12;
   data.term = scale * ui->spinBox_credit_term->value();
   data.rate = ui->doubleSpinBox_credit_rate->value();
 
-  if (data.total_ammount < 0.01) {
+  if (data.total_amount < 0.01) {
     ui->statusBar->showMessage("Total credit amount: minimum value is 0.01");
   } else if (data.term < 1) {
     ui->statusBar->showMessage("Credit term: minimum value is 1");

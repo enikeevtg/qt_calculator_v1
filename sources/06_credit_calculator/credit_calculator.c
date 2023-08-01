@@ -3,7 +3,7 @@
 struct credit_output credit_calculation(struct credit_input* pdata, int credit_type) {
   struct credit_output result = {0};
 
-  double total = pdata->total_ammount;
+  double total = pdata->total_amount;
   double month_rate = pdata->rate / (100.0 * 12.0);
   double term = (double)(pdata->term);
 
@@ -11,7 +11,7 @@ struct credit_output credit_calculation(struct credit_input* pdata, int credit_t
       result.first_month_payment =
           (total * month_rate) / (1 - pow(1.0 + month_rate, -term));
       result.total_payment = result.first_month_payment * term;
-      result.overpayment = result.total_payment - pdata->total_ammount;
+      result.overpayment = result.total_payment - pdata->total_amount;
   } else {
       result.first_month_payment = 0.0;
       for (int month = 1; month <= (int)term; month++) {
@@ -21,7 +21,7 @@ struct credit_output credit_calculation(struct credit_input* pdata, int credit_t
           result.first_month_payment = result.last_month_payment;
         result.total_payment += result.last_month_payment;
       }
-      result.overpayment = result.total_payment - pdata->total_ammount;
+      result.overpayment = result.total_payment - pdata->total_amount;
   }
   return result;
 }

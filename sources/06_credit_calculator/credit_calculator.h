@@ -6,7 +6,7 @@
 enum { ANNUITY, DIFFER };
 
 struct credit_input {
-  double total_ammount;
+  double total_amount;
   int term;
   double rate;  // in percentages
 };

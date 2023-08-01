@@ -581,7 +581,7 @@ void MainWindow::on_action_credit_calculator_triggered() {
 
 void MainWindow::on_action_deposit_calculator_triggered() {
   window_deposit_calc = new DepositCalcWindow();
-  window_deposit_calc->setFixedSize(640, 820);
+  window_deposit_calc->setFixedSize(640, 910);
   window_deposit_calc->show();
 }
 

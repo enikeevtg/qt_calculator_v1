@@ -25,6 +25,7 @@ SOURCES += \
     02_evaluations/08_evaluate_expression.c \
     02_evaluations/09_numerical_calculation.c \
     06_credit_calculator/credit_calculator.c \
+    07_deposit_calculator/deposit_calculator.c \
     creditcalcwindow.cpp \
     depositcalcwindow.cpp \
     main.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
     06_credit_calculator/credit_calculator.h \
+    07_deposit_calculator/deposit_calculator.h \
     creditcalcwindow.h \
     data_structures.h \
     depositcalcwindow.h \

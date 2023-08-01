@@ -98,6 +98,7 @@ MainWindow::~MainWindow() {
   delete ui;
 }
 
+////////////////////////////////////////////////////////////////////////////////
 // SERVICE
 void MainWindow::on_pushButton_AC_clicked() {
   last_token_type = all_clean;

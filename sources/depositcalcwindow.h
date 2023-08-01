@@ -22,10 +22,13 @@ class DepositCalcWindow : public QMainWindow {
 private slots:
     void on_pushButton_calculate_clicked();
 
+    void generateData(struct deposit_input* pdata);
     void clickedAddRow();
     void addNewRow(QTableWidget* table, int month, double amount);
 
     void clickedRemoveRow();
+
+    void print_result(struct deposit_output* result);
 
 private:
   Ui::DepositCalcWindow *ui;

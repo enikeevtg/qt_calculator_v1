@@ -1,33 +1,38 @@
 #include "deposit_calculator.h"
 
-struct deposit_output deposit_calculation(/*struct deposit_input* pdata,
-                                          int deposit_type*/) {
-  double total_begin = 1000000.0;
-  double total = total_begin;
-  int term = 3;
-  double deposit_rate = 6.0;
-  double tax_rate = 13.0;
-  int periodicity = 1;
-  double replenishments[4] = {0.0, 1000.0, 2000.0, 3000.0};
-  double withdrawals[3] = {500.0, 600.0, 700.0};
-  int deposit_type = SIMPLE;
-
-  struct deposit_output result = {0};
-  double earnings[4] = {0};
+int deposit_calculation(struct deposit_input* pdata, struct deposit_output* presult,
+                                          int deposit_type) {
+  double key_rate = 0.075;
+  int periodicity = pdata->periodicity;
+  int term = pdata->term;
+  double total = pdata->total_begin;
+  double deposit_rate = pdata->deposit_rate;
+  double tax_rate = pdata->tax_rate;
+  double* replenishments = pdata->replenishments;
+  double* withdrawals = pdata->withdrawals;
 
   int error = VALID_ACCOUNT_BALANCE;
-  for (int i = 1; error == VALID_ACCOUNT_BALANCE && i <= term; i += periodicity) {
-    total += replenishments[i - 1] - withdrawals[i - 1];
-    if (deposit_type == CAPITALIZATION) total += earnings[i - 1];
-    earnings[i] = total * deposit_rate / 100.0 * (double)periodicity / 12.0;
+  int accruals_number = term / periodicity;
+  double last_earning = 0;
+  double earnings = 0;
+  for (int i = 1; error == VALID_ACCOUNT_BALANCE && i <= accruals_number; i++) {
+    for (int j = i * periodicity - 1; j < i * periodicity; j++) {
+        total += replenishments[j] - withdrawals[j + 1];
+    }
+    if (deposit_type == COMPOUND) total += last_earning;
+    double tmp = (double)periodicity / 12.0;
+    last_earning = total * deposit_rate / 100.0 * tmp;
+    earnings += last_earning;
     if (total < 0.0) error = INVALID_ACCOUNT_BALANCE;
-  }  
-
-  if (error == VALID_ACCOUNT_BALANCE) {
-    result.tax_amount = (total - total_begin) * tax_rate / 100.0;
-    result.accrued_interest = total - total_begin - result.tax_amount;
-    result.total_end = total;
   }
 
-  return result;
+  if (error == VALID_ACCOUNT_BALANCE) {
+    presult->tax_amount = 0.0;
+    if (earnings > key_rate * 1000000) {
+        presult->tax_amount = (earnings - key_rate * 1000000) * tax_rate / 100.0;
+    }
+    presult->accrued_interest = earnings - presult->tax_amount;
+    presult->total_end = total;
+  }
+  return error;
 }

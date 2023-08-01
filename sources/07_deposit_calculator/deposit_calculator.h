@@ -1,9 +1,10 @@
-#ifndef SMARTCALC_06_DEPOSIT_CALCULATOR_CREDIT_CALCULATOR_H_
-#define SMARTCALC_06_DEPOSIT_CALCULATOR_CREDIT_CALCULATOR_H_
+#ifndef SMARTCALC_07_DEPOSIT_CALCULATOR_CREDIT_CALCULATOR_H_
+#define SMARTCALC_07_DEPOSIT_CALCULATOR_CREDIT_CALCULATOR_H_
 
 #include <math.h>
+#include <stdlib.h>
 
-enum { SIMPLE, CAPITALIZATION };
+enum { SIMPLE, COMPOUND };
 
 #define VALID_ACCOUNT_BALANCE 0
 #define INVALID_ACCOUNT_BALANCE 1
@@ -24,7 +25,7 @@ struct deposit_output {
   double total_end;
 };
 
-struct deposit_output deposit_calculation(/*struct deposit_input* pdata,
-                                          int deposit_type*/);
+int deposit_calculation(struct deposit_input* pdata, struct deposit_output* presult,
+                                          int deposit_type);
 
-#endif  // SMARTCALC_06_DEPOSIT_CALCULATOR_CREDIT_CALCULATOR_H_
+#endif  // SMARTCALC_07_DEPOSIT_CALCULATOR_CREDIT_CALCULATOR_H_

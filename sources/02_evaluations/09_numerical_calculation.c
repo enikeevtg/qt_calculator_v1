@@ -45,7 +45,9 @@ double div_calc(double value_1, double value_2) { return value_1 / value_2; }
 
 double mod_calc(double value_1, double value_2) {
   double result = NAN;
-  if ((int)value_2 != 0) result = (double)((int)value_1 % (int)value_2);
+  if ((int)value_2 != 0 && value_1 == value_1 && value_2 == value_2) {
+      result = (double)((int)value_1 % (int)value_2);
+  }
   return result;
 }
 

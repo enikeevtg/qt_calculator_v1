@@ -99,6 +99,20 @@ MainWindow::~MainWindow() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// FINANCIAL MODES
+void MainWindow::on_action_credit_calculator_triggered() {
+  window_credit_calc = new CreditCalcWindow();
+  window_credit_calc->setFixedSize(640, 549);
+  window_credit_calc->show();
+}
+
+void MainWindow::on_action_deposit_calculator_triggered() {
+  window_deposit_calc = new DepositCalcWindow();
+  window_deposit_calc->setFixedSize(640, 910);
+  window_deposit_calc->show();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // SERVICE
 void MainWindow::on_pushButton_AC_clicked() {
   last_token_type = all_clean;
@@ -574,15 +588,4 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
 //     window.show();
 // }
 
-void MainWindow::on_action_credit_calculator_triggered() {
-  window_credit_calc = new CreditCalcWindow();
-  window_credit_calc->setFixedSize(640, 549);
-  window_credit_calc->show();
-}
-
-void MainWindow::on_action_deposit_calculator_triggered() {
-  window_deposit_calc = new DepositCalcWindow();
-  window_deposit_calc->setFixedSize(640, 910);
-  window_deposit_calc->show();
-}
 

@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 
-#include "ui_mainwindow.h"
 #include <memory>
+
+#include "ui_mainwindow.h"
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
@@ -94,25 +95,21 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 MainWindow::~MainWindow() {
-  delete ui->expression_graph;
   delete ui;
 }
 
 // SERVICE
 void MainWindow::on_pushButton_AC_clicked() {
-  ui->label_input->setText("0");
+  last_token_type = all_clean;
+  ui->statusBar->showMessage("");
   ui->label_output->setText("");
   ui->doubleSpinBox_var->setEnabled(false);
   ui->doubleSpinBox_var->setValue(0.0);
-  ui->doubleSpinBox_xmin->setValue(0);
-  ui->doubleSpinBox_xmax->setValue(21.0);
-  ui->doubleSpinBox_ymin->setValue(-11.0);
-  ui->doubleSpinBox_ymax->setValue(11.0);
-  ui->expression_graph->xAxis->setRange(0, 21);
-  ui->expression_graph->yAxis->setRange(-11, 11);
   ui->expression_graph->removeGraph(0);
   ui->expression_graph->replot();
 
+  ui->label_input->setText("");
+  ui->pushButton_0->click();
   is_dot_input = false;
   is_u_minus_input = false;
   brackets_counter = 0;
@@ -315,7 +312,7 @@ void MainWindow::on_pushButton_op_pow_clicked() {
   }
 
   if (last_token_type == dot_token) {
-      ui->pushButton_0->click();
+    ui->pushButton_0->click();
   }
 
   if (last_token_type == num_token || last_token_type == close_bracket_token ||
@@ -434,15 +431,15 @@ void MainWindow::on_pushButton_calc_clicked() {
 
   QString result_string;
   if (error == OK) {
+    ui->statusBar->showMessage("");
     result_string = QString::number(result, 'g');
+    ui->label_input->setText(input_label_text + " =");
+    ui->label_output->setText(result_string);
+    last_token_type = calculation;
   } else {
     ERRORS_MESSAGES;
-    result_string = errors_msg[error];
+    ui->statusBar->showMessage(errors_msg[error]);
   }
-
-  ui->label_input->setText(input_label_text + " =");
-  ui->label_output->setText(result_string);
-  last_token_type = calculation;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -456,7 +453,7 @@ void MainWindow::on_pushButton_print_graph_clicked() {
   if (x_max - x_min > 0 && y_max - y_min > 0) {
     graphPlot(x_min, x_max, y_min, y_max);
   } else {
-    ui->label_output->setText("incorrect range");
+    ui->statusBar->showMessage("incorrect range");
   }
 }
 
@@ -478,9 +475,10 @@ void MainWindow::graphPlot(double x_min, double x_max, double y_min,
   QVector<double> x, y;
   if (error != OK) {
     ERRORS_MESSAGES;
-    ui->label_output->setText(errors_msg[error]);
+    ui->statusBar->showMessage(errors_msg[error]);
 
   } else {
+    ui->statusBar->showMessage("");
     variable = x_min;
     double step_size = (x_max - x_min) / ui->expression_graph->width();
     while (variable <= x_max) {
@@ -581,16 +579,9 @@ void MainWindow::on_action_credit_calculator_triggered() {
   window_credit_calc->show();
 }
 
-void MainWindow::on_action_deposit_calculator_triggered()
-{
-    window_deposit_calc = new DepositCalcWindow();
-    window_deposit_calc->setFixedSize(640, 820);
-    window_deposit_calc->show();
-}
-
-
-void MainWindow::on_expression_graph_destroyed()
-{
-    delete ui->expression_graph;
+void MainWindow::on_action_deposit_calculator_triggered() {
+  window_deposit_calc = new DepositCalcWindow();
+  window_deposit_calc->setFixedSize(640, 820);
+  window_deposit_calc->show();
 }
 

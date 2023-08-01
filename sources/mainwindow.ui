@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1090</width>
-    <height>711</height>
+    <height>740</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1396,6 +1396,14 @@ QPushButton:pressed {
    </attribute>
    <addaction name="action_credit_calculator"/>
    <addaction name="action_deposit_calculator"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>21</pointsize>
+    </font>
+   </property>
   </widget>
   <action name="action_credit_calculator">
    <property name="text">

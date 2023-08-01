@@ -27,15 +27,17 @@ GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 
 # FILENAMES
 SRC_DIR = ./sources/
-BUILD_DIR = ./build/
 ATTEMPT_DIR = $(SRC_DIR)00_attempt_at_writing/
 DATA_STRUCT_DIR = $(SRC_DIR)01_data_structs_processing/
 EVAL_DIR = $(SRC_DIR)02_evaluations/
 SRC = $(wildcard $(DATA_STRUCT_DIR)*.c)
 SRC += $(wildcard $(EVAL_DIR)*.c)
+
 TESTS_DIR = $(SRC_DIR)03_tests/
 TESTS_SRC = $(wildcard $(TESTS_DIR)*.c)
 TEST_EXE = ./tests_runner
+
+BUILD_DIR = ./build/
 APP = qt_calculator_v1.app
 
 # BUILD

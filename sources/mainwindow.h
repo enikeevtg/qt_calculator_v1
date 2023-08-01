@@ -54,14 +54,13 @@ class MainWindow : public QMainWindow {
   void on_action_credit_calculator_triggered();
   void on_action_deposit_calculator_triggered();
 
-  void on_expression_graph_destroyed();
-
-private:
+ private:
   Ui::MainWindow* ui;
   CreditCalcWindow* window_credit_calc;
   DepositCalcWindow* window_deposit_calc;
 
   enum {
+    all_clean,
     num_token,
     dot_token,
     var_token,

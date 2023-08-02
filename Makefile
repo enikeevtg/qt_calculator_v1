@@ -18,12 +18,6 @@ DEBUG = -DDEBUG
 CF = -Wall -Werror -Wextra
 STD = -std=c11 -pedantic
 ASAN = -g -fsanitize=address
-ifeq ($(OS), Darwin)
-	TEST_FLAGS = -lcheck
-else ifeq ($(OS), Linux)
-	TEST_FLAGS = -lcheck -lsubunit -lm -lrt -lpthread -D_GNU_SOURCE
-endif
-GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 
 # FILENAMES
 SRC_DIR = ./sources/
@@ -33,37 +27,11 @@ EVAL_DIR = $(SRC_DIR)02_evaluations/
 SRC = $(wildcard $(DATA_STRUCT_DIR)*.c)
 SRC += $(wildcard $(EVAL_DIR)*.c)
 
-TESTS_DIR = $(SRC_DIR)03_tests/
-TESTS_SRC = $(wildcard $(TESTS_DIR)*.c)
-TEST_EXE = ./tests_runner
-
 BUILD_DIR = ./build/
 APP = qt_calculator_v1.app
 
 # BUILD
 all: clean install launch
-
-# TESTS
-test: clean
-	@$(CC) $(CF) $(ASAN) $(TESTS_SRC) $(SRC) -o $(TEST_EXE) $(TEST_FLAGS)
-	$(TEST_EXE)
-
-leaks: clean
-	@$(CC) $(CF) $(ASAN) $(TESTS_SRC) $(SRC) -o $(TEST_EXE) $(TEST_FLAGS)
-	@$(LEAKS) $(TEST_EXE)
-
-valgrind:
-
-gcov: gcov_report
-
-gcov_report: clean
-	@$(CC) $(CF) $(GCOV_FLAGS) $(ASAN) $(TESTS_SRC) $(SRC) -o $(TEST_EXE) $(TEST_FLAGS)
-	@$(LEAKS) $(TEST_EXE)
-	@lcov -t "./gcov" -o report.info --no-external -c -d .
-	@genhtml -o report report.info
-	@gcovr -r . --html-details -o ./report/coverage_report.html
-	@$(REPORT_OPEN) ./report/index.html
-	@rm -rf *.gcno *.gcda gcov_test *.info
 
 # APP
 install:

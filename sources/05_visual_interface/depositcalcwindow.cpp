@@ -115,6 +115,7 @@ void DepositCalcWindow::on_pushButton_calculate_clicked() {
 
     if (error == VALID_ACCOUNT_BALANCE) {
         print_result(&result);
+        ui->statusbar->showMessage("");
     } else {
         print_result(&result);
         ui->statusbar->showMessage("invalid account balance");

@@ -393,7 +393,7 @@ QPushButton:pressed {
      <number>1</number>
     </property>
     <property name="text">
-     <string>0</string>
+     <string>0.00 RUB</string>
     </property>
     <property name="wordWrap">
      <bool>false</bool>
@@ -421,7 +421,7 @@ QPushButton:pressed {
      <number>1</number>
     </property>
     <property name="text">
-     <string>0</string>
+     <string>0.00 RUB</string>
     </property>
     <property name="wordWrap">
      <bool>false</bool>
@@ -449,7 +449,7 @@ QPushButton:pressed {
      <number>1</number>
     </property>
     <property name="text">
-     <string>0</string>
+     <string>0.00 RUB</string>
     </property>
     <property name="wordWrap">
      <bool>false</bool>

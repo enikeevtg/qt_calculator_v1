@@ -27,6 +27,8 @@ EVAL_DIR = $(SRC_DIR)02_evaluations/
 SRC = $(wildcard $(DATA_STRUCT_DIR)*.c)
 SRC += $(wildcard $(EVAL_DIR)*.c)
 
+VISUAL_DIR = ./05_visual_interface/
+
 BUILD_DIR = ./build/
 APP = qt_calculator_v1.app
 
@@ -36,7 +38,7 @@ all: clean install launch
 # APP
 install:
 	$(MK) $(BUILD_DIR)
-	cd $(BUILD_DIR) && qmake ../$(SRC_DIR)qt_calculator_v1.pro && make && make clean && rm -rf .qmake.stash Makefile
+	cd $(BUILD_DIR) && qmake ../$(SRC_DIR)$(VISUAL_DIR)qt_calculator_v1.pro && make && make clean && rm -rf .qmake.stash Makefile
 
 launch:
 	open $(BUILD_DIR)$(APP)
@@ -48,18 +50,17 @@ dvi:
 	open $(SRC_DIR)readme.html
 
 dist:
-	@if [ ! -d $(BUILD_DIR)$(APP) ] ; then echo "creating build" ; make install; fi
-	@if [ -d $(BUILD_DIR) ] ; then tar -zcvf archive.tar build; else echo "build not exists, error!"; exit 1; fi
+	tar -zcvf qt_calculator_v1.tar $(ALL_DIRS) Makefile
 
 app_leaks:
 	$(LEAKS) $(BUILD_DIR)$(APP)/Contents/MacOS/qt_calculator_v1
 
 # SERVICES
 style:
-	clang-format --style=google -n $(SRC_DIR)*.h $(SRC_DIR)*.cpp $(SRC) $(TESTS_SRC)
+	clang-format --style=google -n *.h $(SRC) $(TESTS_SRC) $(CREDIT_DIR)* $(DEPOSIT_DIR)* $(VISUAL_DIR)*.cpp $(VISUAL_DIR)*.h
 
 gost:
-	clang-format --style=google -i $(SRC_DIR)*.h $(SRC_DIR)*.cpp $(SRC) $(TESTS_SRC)
+	clang-format --style=google -i *.h $(SRC) $(TESTS_SRC) $(CREDIT_DIR)* $(DEPOSIT_DIR)* $(VISUAL_DIR)*.cpp $(VISUAL_DIR)*.h
 
 clean:
 	@$(RM) $(OBJ_DIR)

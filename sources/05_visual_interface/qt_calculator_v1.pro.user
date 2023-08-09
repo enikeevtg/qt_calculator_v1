@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.0, 2023-08-02T06:32:31. -->
+<!-- Written by QtCreator 7.0.0, 2023-08-07T21:39:56. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -241,14 +241,14 @@
      <value type="QString">DYLD_FRAMEWORK_PATH</value>
      <value type="QString">DYLD_LIBRARY_PATH</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/C7_SmartCalc_v1.0-1/src/05_visual_interface/SmartCalc_v1.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/C7_SmartCalc_v1.0-1/src/05_visual_interface/SmartCalc_v1.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/qt_calculator_v1/sources/05_visual_interface/qt_calculator_v1.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/qt_calculator_v1/sources/05_visual_interface/qt_calculator_v1.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/build-SmartCalc_v1-Desktop_x86_darwin_generic_mach_o_64bit-Debug/SmartCalc_v1.app/Contents/MacOS</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/opt/goinfre/zeftyrst/work_zeftyrst/2023.07_C7_SmartCalc_v1.0/build-SmartCalc_v1-Desktop_x86_darwin_generic_mach_o_64bit-Debug/qt_calculator_v1.app/Contents/MacOS</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

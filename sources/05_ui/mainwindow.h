@@ -1,5 +1,5 @@
-#ifndef SMARTCALC_05_VISUAL_INTERFACE_MAINWINDOW_H_
-#define SMARTCALC_05_VISUAL_INTERFACE_MAINWINDOW_H_
+#ifndef SMARTCALC_05_UI_MAINWINDOW_H_
+#define SMARTCALC_05_UI_MAINWINDOW_H_
 
 #include <QMainWindow>
 #include <cstring>
@@ -18,6 +18,19 @@ namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
+
+enum {
+  all_clean,
+  num_token,
+  dot_token,
+  var_token,
+  op_token,
+  pow_token,
+  open_bracket_token,
+  close_bracket_token,
+  math_func_token,
+  calculation
+};
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -59,21 +72,9 @@ class MainWindow : public QMainWindow {
   CreditCalcWindow* window_credit_calc;
   DepositCalcWindow* window_deposit_calc;
 
-  enum {
-    all_clean,
-    num_token,
-    dot_token,
-    var_token,
-    op_token,
-    pow_token,
-    open_bracket_token,
-    close_bracket_token,
-    math_func_token,
-    calculation
-  };
   int last_token_type = num_token;
   bool is_dot_input = false;
   bool is_u_minus_input = false;
   int brackets_counter = 0;
 };
-#endif  // SMARTCALC_05_VISUAL_INTERFACE_MAINWINDOW_H_
+#endif  // SMARTCALC_05_UI_MAINWINDOW_H_
